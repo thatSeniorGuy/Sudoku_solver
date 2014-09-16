@@ -92,13 +92,49 @@ bool Square::isSet() const {
 }
 
 int Square::getValue() const {
-	//TODO should throw an exception here if this square is not set.
+	if(!isSet_)
+		throw std::logic_error("Tried to get the value of an un-set square.");
 
 	return value_;
 }
 
 std::set<int> Square::getPossibleValues() const {
 	return possibleValues_;
+}
+
+bool Square::restrictValues(std::initializer_list<int> vals){
+	//TODO here.
+
+	// If this square is already set, then there's no point in continuing.
+	if(isSet_)
+		return false;
+
+	for(auto & x: vals){
+
+		// Check that potential restrict-ee is valid.
+		if(x < 0 || x > puzzle_size){
+			std::ostringstream oss;
+			oss << "Value of '" << x << "' is invalid.";
+			throw std::out_of_range(oss.str().c_str());
+		}
+
+		/* std::set::erase() returns the number of elements erased. If 0 was
+		 * returned, then the value was already not possible, so there's no
+		 * point in further processing. */
+		if(possibleValues_.erase(x) == 0)
+			continue;
+
+		if(possibleValues_.size()==1){
+			value_ = *(possibleValues_.begin());
+			isSet_ = true;
+			break;
+		}
+
+		if(possibleValues_.size() == 0)
+			throw std::logic_error("Square has been left with no possible values.");
+	}
+
+	return true;
 }
 
 Square & Square::operator=(const Square & other){
