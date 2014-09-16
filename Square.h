@@ -10,8 +10,12 @@
 
 #include <set>
 #include <initializer_list>
+#include "Position.h"
 
 class Square {
+public:
+	const int puzzle_size = 9;
+
 public:
 	/*************************************************************************/
 	/*********************** Constructors ************************************/
@@ -20,24 +24,39 @@ public:
 	Square(int row = 0, int col = 0);
 	Square(const Square & other);
 
+	/*************************************************************************/
+	/************************ Mutators ***************************************/
+	/*************************************************************************/
 	bool setValue(int newValue);
 
-	bool getIsSet() const;
-	int getValue() const;
+	/*************************************************************************/
+	/************************ Inspectors *************************************/
+	/*************************************************************************/
+
 	int getRow() const;
 	int getCol() const;
+	Position getPosition() const;
+	bool isSet() const;
+	int getValue() const;
+	std::set<int> getPossibleValues() const;
+
+	/*************************************************************************/
+	/************************ Misc *******************************************/
+	/*************************************************************************/
 
 	bool restrictValues(std::initializer_list<int> vals);
 
 	Square & operator=(const Square & other);
 
+	static void validatePosition(int row, int col);
+
 
 private:
-	bool isSet;
-	int value;
-	std::set<int> possibleValues;
-	int row;
-	int col;
+	int row_;
+	int col_;
+	bool isSet_;
+	int value_;
+	std::set<int> possibleValues_;
 };
 
 #endif /* SQUARE_H_ */
