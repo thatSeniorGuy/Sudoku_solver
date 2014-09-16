@@ -10,7 +10,7 @@
 #include "Square.h"
 
 Square::Square(int row, int col, int value) :
-	row_(row), col_(col), isSet_(true), value_(value), possibleValues_(value)
+	row_(row), col_(col), isSet_(true), value_(value), possibleValues_({value})
 {
 	try{
 		validatePosition(row, col);
@@ -103,8 +103,6 @@ std::set<int> Square::getPossibleValues() const {
 }
 
 bool Square::restrictValues(std::initializer_list<int> vals){
-	//TODO here.
-
 	// If this square is already set, then there's no point in continuing.
 	if(isSet_)
 		return false;
@@ -145,7 +143,7 @@ Square & Square::operator=(const Square & other){
 	return *this;
 }
 
-static void Square::validatePosition(int row, int col){
+void Square::validatePosition(int row, int col){
 	if(row < 0 || row >= puzzle_size){
 		std::ostringstream oss;
 		oss << "Invalid row supplied (" << row <<").";

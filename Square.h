@@ -14,7 +14,7 @@
 
 class Square {
 public:
-	const int puzzle_size = 9;
+	static const int puzzle_size = 9;
 
 public:
 	/*************************************************************************/
