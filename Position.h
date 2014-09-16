@@ -18,8 +18,4 @@ public:
 	Position & operator=(const Position & other);
 };
 
-
-
-
-
 #endif /* POSITION_H_ */
