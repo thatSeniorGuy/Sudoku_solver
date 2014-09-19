@@ -103,6 +103,7 @@ std::set<int> Square::getPossibleValues() const {
 }
 
 bool Square::restrictValues(std::initializer_list<int> vals){
+	//TODO what exactly do the return values mean?
 	// If this square is already set, then there's no point in continuing.
 	if(isSet_)
 		return false;
@@ -117,12 +118,15 @@ bool Square::restrictValues(std::initializer_list<int> vals){
 		}
 
 		/* std::set::erase() returns the number of elements erased. If 0 was
-		 * returned, then the value was already not possible, so there's no
-		 * point in further processing. */
+		 * returned, then the value was already not possible for this square,
+		 * so there's no point in further processing _this_ value in the
+		 * list. */
 		if(possibleValues_.erase(x) == 0)
 			continue;
 
-		if(possibleValues_.size()==1){
+		/* If there's only one possible value left, then that must be this
+		 * Square's value; set this square appropriately and return. */
+		if(possibleValues_.size() == 1){
 			value_ = *(possibleValues_.begin());
 			isSet_ = true;
 			break;
