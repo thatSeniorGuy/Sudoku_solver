@@ -44,6 +44,8 @@ public:
 	/************************ Misc *******************************************/
 	/*************************************************************************/
 
+	/* Return true if all but one of the Square's possible values erased, so
+	 * this square can have only one possible value. */
 	bool restrictValues(std::initializer_list<int> vals);
 
 	Square & operator=(const Square & other);

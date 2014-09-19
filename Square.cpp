@@ -103,7 +103,6 @@ std::set<int> Square::getPossibleValues() const {
 }
 
 bool Square::restrictValues(std::initializer_list<int> vals){
-	//TODO what exactly do the return values mean?
 	// If this square is already set, then there's no point in continuing.
 	if(isSet_)
 		return false;
@@ -129,14 +128,14 @@ bool Square::restrictValues(std::initializer_list<int> vals){
 		if(possibleValues_.size() == 1){
 			value_ = *(possibleValues_.begin());
 			isSet_ = true;
-			break;
+			return true;
 		}
 
 		if(possibleValues_.size() == 0)
 			throw std::logic_error("Square has been left with no possible values.");
 	}
 
-	return true;
+	return false;
 }
 
 Square & Square::operator=(const Square & other){
