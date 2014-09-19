@@ -8,19 +8,19 @@
 #ifndef POSITION_H_
 #define POSITION_H_
 
-/**
- * Convenience struct to represent a position in a Sudoku puzzle, being a row
- * and a column.
+/** \class Position
+ *  \brief Convenience struct to represent a position in a Sudoku puzzle,
+ *  being a row and a column.
  */
 struct Position{
 public:
-	/**
-	 * Row of the Sudoku puzzle.
+	/** \var row
+	 *  \brief Row of the Sudoku puzzle.
 	 */
 	int row;
 
-	/**
-	 * Column of the Sudoku puzzle.
+	/** \var col
+	 *  \brief Column of the Sudoku puzzle.
 	 */
 	int col;
 public:
