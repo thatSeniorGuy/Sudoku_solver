@@ -50,7 +50,7 @@ Square::Square(const Square & other) :
 
 bool Square::setValue(int newValue){
 	//TODO mixing bools and exceptions seems wrong.
-	if(newValue < 0 || newValue > puzzle_size){
+	if(newValue < 1 || newValue > puzzle_size){
 		std::ostringstream oss;
 		oss << "Invalid new value (" << newValue << ") supplied.";
 		throw std::out_of_range(oss.str().c_str());
