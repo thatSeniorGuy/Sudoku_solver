@@ -49,6 +49,7 @@ public:
 	Square & operator=(const Square & other);
 
 	static void validatePosition(int row, int col);
+	static void validatePosition(const Position & pos);
 
 
 private:

@@ -161,4 +161,11 @@ void Square::validatePosition(int row, int col){
 	}
 }
 
-
+void Square::validatePosition(const Position & pos){
+	try{
+		validatePosition(pos.row, pos.col);
+	}
+	catch(std::out_of_range & e){
+		throw e;
+	}
+}
