@@ -12,6 +12,15 @@
 #include <initializer_list>
 #include "Position.h"
 
+/**
+ * Atomic piece of a Sudoku puzzle.
+ *
+ * This class represents the smallest part of a Sudoku puzzle, the square (of
+ * which there are 81 in a standard puzzle). A square can either be set and have
+ * a value between 1 and 'puzzle_size', or it can be unset and have many
+ * 'possibleValues'. Squares also have a row and a column, both between 0 and
+ * 'puzzle_size'. For now, 'puzzle_size' is set to 9.
+ */
 class Square {
 public:
 	static const int puzzle_size = 9;
