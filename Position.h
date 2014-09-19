@@ -8,9 +8,10 @@
 #ifndef POSITION_H_
 #define POSITION_H_
 
-/** \class Position
- *  \brief Convenience struct to represent a position in a Sudoku puzzle,
- *  being a row and a column.
+/**
+ * \class Position
+ * \brief Convenience struct to represent a position in a Sudoku puzzle,
+ * being a row and a column.
  */
 struct Position{
 public:
