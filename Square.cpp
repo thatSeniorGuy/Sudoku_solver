@@ -168,3 +168,19 @@ void Square::validatePosition(const Position & pos){
 		throw e;
 	}
 }
+
+std::string Square::toString() const {
+	std::ostringstream oss;
+	if(isSet_)
+		oss << value_;
+	else
+		oss << "#";
+	return oss.str();
+}
+
+std::ostream & operator<<(std::ostream & ostream, const Square & square){
+	ostream << square.toString();
+	return ostream;
+}
+
+

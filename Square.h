@@ -10,6 +10,8 @@
 
 #include <set>
 #include <initializer_list>
+#include <iostream>
+#include <string>
 #include "Position.h"
 
 /**
@@ -174,9 +176,19 @@ public:
 	 * will be thrown.
 	 */
 	static void validatePosition(const Position & pos);
-	/**@}*/
 
-	//TODO operator<<(ostream)
+	/**
+	 * \brief Returns a string representation of the Square.
+	 *
+	 * If the Square is set, then the returned std::string will contain its
+	 * value; otherwise, the string will contain the # symbol.
+	 */
+	std::string toString() const;
+
+
+	/**@}*/ // Miscellaneous.
+
+
 
 
 private:
@@ -212,5 +224,15 @@ private:
 	 */
 	std::set<int> possibleValues_;
 };
+
+/**
+ * \brief Overloads the << operator for printing a \ref Square to a
+ * std::ostream.
+ *
+ * Prints the \ref Square to the ostream, then returns the ostream. The string
+ * representation of a Square is either its value if it is set, or a # symbol
+ * if it is not.
+ */
+std::ostream & operator<<(std::ostream & ostream, const Square & square);
 
 #endif /* SQUARE_H_ */
