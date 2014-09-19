@@ -110,7 +110,7 @@ bool Square::restrictValues(std::initializer_list<int> vals){
 	for(auto & x: vals){
 
 		// Check that potential restrict-ee is valid.
-		if(x < 0 || x > puzzle_size){
+		if(x < 1 || x > puzzle_size){
 			std::ostringstream oss;
 			oss << "Value of '" << x << "' is invalid.";
 			throw std::out_of_range(oss.str().c_str());
