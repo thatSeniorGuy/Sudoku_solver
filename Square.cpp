@@ -13,7 +13,8 @@ Square::Square(int row, int col, int value) :
 	row_(row), col_(col), isSet_(true), value_(value), possibleValues_({value})
 {
 	try{
-		validatePosition(row, col);
+		validateCoordinate(row);
+		validateCoordinate(col);
 	}
 	catch (std::exception & e) {
 		throw e;
@@ -30,7 +31,8 @@ Square::Square(int row, int col) :
 		row_(row), col_(col), isSet_(false), value_(-1), possibleValues_()
 {
 	try{
-		validatePosition(row, col);
+		validateCoordinate(row);
+		validateCoordinate(col);
 	}
 	catch (std::exception * e) {
 		throw e;
@@ -49,7 +51,6 @@ Square::Square(const Square & other) :
 {}
 
 bool Square::setValue(int newValue){
-	//TODO mixing bools and exceptions seems wrong.
 	if(newValue < 1 || newValue > puzzle_size){
 		std::ostringstream oss;
 		oss << "Invalid new value (" << newValue << ") supplied.";
@@ -72,6 +73,26 @@ bool Square::setValue(int newValue){
 		throw std::runtime_error("Could not insert new value into set?");
 
 	return true;
+}
+
+void Square::setRow(int newRow){
+	try{
+		validateCoordinate(newRow);
+		row_ = newRow;
+	}
+	catch(std::out_of_range & e) {
+		throw e;
+	}
+}
+
+void Square::setCol(int newCol){
+	try{
+		validateCoordinate(newCol);
+		col_ = newCol;
+	}
+	catch(std::out_of_range & e){
+		throw e;
+	}
 }
 
 int Square::getRow() const {
@@ -146,23 +167,18 @@ Square & Square::operator=(const Square & other){
 	return *this;
 }
 
-void Square::validatePosition(int row, int col){
-	if(row < 0 || row >= puzzle_size){
+void Square::validateCoordinate(int coord){
+	if(coord < 0 || coord >= puzzle_size){
 		std::ostringstream oss;
-		oss << "Invalid row supplied (" << row <<").";
-		throw std::out_of_range(oss.str().c_str());
-	}
-
-	if(col < 0 || col >= puzzle_size){
-		std::ostringstream oss;
-		oss << "Invalid col supplied (" << col <<").";
+		oss << "Invalid co-ordinate supplied (" << coord <<").";
 		throw std::out_of_range(oss.str().c_str());
 	}
 }
 
 void Square::validatePosition(const Position & pos){
 	try{
-		validatePosition(pos.row, pos.col);
+		validateCoordinate(pos.row);
+		validateCoordinate(pos.col);
 	}
 	catch(std::out_of_range & e){
 		throw e;

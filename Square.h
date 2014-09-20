@@ -104,6 +104,24 @@ public:
 	 */
 	bool setValue(int newValue);
 
+	/**
+	 * \brief Changes the Square's row.
+	 *
+	 * Tries to change the Square's row to the new specified value. If the new
+	 * co-ordinate is not between 0 and puzzle_size - 1, a std::out_of_range
+	 * exception will be thrown.
+	 */
+	void setRow(int newRow);
+
+	/**
+	 * \brief Changes the Square's col.
+	 *
+	 * Tries to change the Square's col to the new specified value. If the new
+	 * co-ordinate is not between 0 and puzzle_size - 1, a std::out_of_range
+	 * exception will be thrown.
+	 */
+	void setCol(int newCol);
+
 	/**@}*/ // Mutators
 
 	/** @name Inspectors */
@@ -160,13 +178,13 @@ public:
 	Square & operator=(const Square & other);
 
 	/**
-	 * \brief Validates the given position (row and col).
+	 * \brief Validates the given co-ordinate (either a row or a col).
 	 *
-	 * Utility function to validate whether a given row and col are valid, that
-	 * is, between 0 and \ref puzzle_size - 1. If they are not, then a
+	 * Utility function to validate whether a given row or col is valid; that
+	 * is, between 0 and \ref puzzle_size - 1. If it is not, then a
 	 * std::out_of_range exception will be thrown.
 	 */
-	static void validatePosition(int row, int col);
+	static void validateCoordinate(int coord);
 
 	/**
 	 * \brief Validates the given \ref Position.
@@ -188,9 +206,6 @@ public:
 
 
 	/**@}*/ // Miscellaneous.
-
-
-
 
 private:
 	/**
