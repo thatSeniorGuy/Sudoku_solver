@@ -1,8 +1,10 @@
-/*
- * Puzzle.h
+/**
+ * \file Puzzle.h
+ *
+ * \brief Defines the class Puzzle and functions for interfacing with it.
  *
  *  Created on: 20 Sep 2014
- *      Author: alex
+ *      Author: Alexander Senior.
  */
 
 #ifndef PUZZLE_H_
