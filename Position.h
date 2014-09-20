@@ -1,5 +1,6 @@
-/*
- * Position.h
+/** \file Position.h
+ *
+ * \brief Defines the utility class Position.
  *
  *  Created on: 16 Sep 2014
  *      Author: Alexander Senior.

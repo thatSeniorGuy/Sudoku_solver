@@ -1,8 +1,9 @@
-/*
- * Square.h
+/** \file Square.h
+ *
+ * \brief Defines the Square class and functions for interacting with it.
  *
  *  Created on: 16 Sep 2014
- *      Author: alex
+ *      Author: Alexander Senior.
  */
 
 #ifndef SQUARE_H_
