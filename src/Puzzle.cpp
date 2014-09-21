@@ -6,6 +6,7 @@
  */
 
 #include "Puzzle.h"
+#include <stdexcept>
 
 Puzzle::Puzzle() : squares_(nullptr), solved_(false),
 	numLeftToSolve_(puzzle_size*puzzle_size) {
