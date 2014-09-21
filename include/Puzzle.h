@@ -41,7 +41,7 @@ public:
 
 	Puzzle(const Puzzle & other);
 
-	Puzzle & operator=(const Puzzle & other);
+
 
 
 	/**
@@ -49,6 +49,8 @@ public:
 	 */
 	~Puzzle();
 	/**@}*/
+
+	Puzzle & operator=(const Puzzle & other);
 
 
 
