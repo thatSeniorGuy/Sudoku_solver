@@ -5,9 +5,16 @@
  *      Author: alex
  */
 #include <iostream>
+#include <string>
 
-int main(){
-	std::cout << "Nothing to see yet!" << std::endl;
+extern void testSquare();
+
+int main(int argc, char * argv[]){
+
+	if(argc==2 && std::string(argv[1])=="testSquare")
+		testSquare();
+	else
+		std::cout << "Nothing to see yet!" << std::endl;
 
 	return 0;
 }
