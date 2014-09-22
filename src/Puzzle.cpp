@@ -10,7 +10,9 @@
 #include <fstream>
 #include <sstream>
 
-Puzzle::Puzzle() : squares_(nullptr), solved_(false),
+Puzzle::Puzzle() :
+	squares_(nullptr),
+	solved_(false),
 	numLeftToSolve_(puzzle_size*puzzle_size) {
 
 	squares_ = new Square[puzzle_size*puzzle_size];
@@ -29,8 +31,11 @@ Puzzle::Puzzle() : squares_(nullptr), solved_(false),
 
 }
 
-Puzzle::Puzzle(std::string filename) : squares_(nullptr), solved_(false),
+Puzzle::Puzzle(std::string filename) :
+		squares_(nullptr),
+		solved_(false),
 		numLeftToSolve_(puzzle_size*puzzle_size){
+	//TODO make custom exception and divide this code up.
 	std::ifstream inFile(filename);
 	if(inFile.good()){
 		squares_ = new Square[puzzle_size*puzzle_size];
@@ -53,7 +58,7 @@ Puzzle::Puzzle(std::string filename) : squares_(nullptr), solved_(false),
 
 		while(!inFile.eof()){
 			getline(inFile, line);
-			if(line.size()!=puzzle_size){
+			if(static_cast<int>(line.size())!=puzzle_size){
 				success = false;
 				break;
 			}
@@ -104,6 +109,35 @@ Puzzle::Puzzle(std::string filename) : squares_(nullptr), solved_(false),
 		throw std::runtime_error(oss.str());
 	}
 
+}
+
+Puzzle::Puzzle(const Puzzle & other) :
+		squares_(nullptr),
+		solved_(other.solved_),
+		numLeftToSolve_(other.numLeftToSolve_){
+	squares_ = new Square[puzzle_size*puzzle_size];
+	for(int i = 0; i < puzzle_size*puzzle_size; i++){
+		squares_[i] = other.squares_[i];
+	}
+}
+
+Puzzle & Puzzle::operator=(const Puzzle & other){
+
+	// Handle self-assignment.
+	if(this==&other)
+		return *this;
+
+	solved_ = other.solved_;
+	numLeftToSolve_ = other.numLeftToSolve_;
+
+	delete[] squares_;
+	squares_ = nullptr;
+
+	squares_ = new Square[puzzle_size*puzzle_size];
+	for(int i = 0; i < puzzle_size*puzzle_size; i++)
+		squares_[i] = other.squares_[i];
+
+	return *this;
 }
 
 Puzzle::~Puzzle() {
