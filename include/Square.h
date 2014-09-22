@@ -70,7 +70,7 @@ public:
 	 * puzzle_size - 1, then a std::out_of_range exception will be thrown.
 	 *
 	 * \param value The new \ref Square's value. If this is not between 1 and
-	 * \ref puzzle_size - 1, then a std::out_of_range exception will be thrown.
+	 * \ref puzzle_size, then a std::out_of_range exception will be thrown.
 	 */
 	Square(int row, int col, int value);
 
