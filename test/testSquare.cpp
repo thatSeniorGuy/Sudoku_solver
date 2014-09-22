@@ -18,6 +18,7 @@ using std::endl;
 void testSquare();
 static void testDefaultConstructor();
 static void testSetterConstructor();
+static void testCopyConstructor();
 
 
 void testSquare(){
@@ -25,6 +26,7 @@ void testSquare(){
 
 	testDefaultConstructor();
 	testSetterConstructor();
+	testCopyConstructor();
 
 	cout << "*** All done! ***" << endl;
 }
@@ -34,7 +36,8 @@ static void testDefaultConstructor(){
 
 	// Cases for row/column: -1, 0, 1, 7, 8, 9
 	try{
-		cout << "Trying to create bad square (-1 row), expecting exception ..." << endl;
+		cout <<
+		"Trying to create bad square (-1 row), expecting exception ..." << endl;
 		Square s(-1,0);
 		assert(false && "Did not get expected exception.");
 	}
@@ -60,7 +63,8 @@ static void testDefaultConstructor(){
 	cout << "No issue." << endl;
 
 	try{
-		cout << "Trying to create bad square (row=9), expecting exception ..." << endl;
+		cout <<
+		"Trying to create bad square (row=9), expecting exception ..." << endl;
 		Square s(9,0);
 		assert(false && "Did not get expected exception.");
 	}
@@ -70,7 +74,8 @@ static void testDefaultConstructor(){
 	}
 
 	try{
-		cout << "Trying to create bad square (-1 col), expecting exception ..." << endl;
+		cout <<
+		"Trying to create bad square (-1 col), expecting exception ..." << endl;
 		Square s(0,-1);
 		assert(false && "Did not get expected exception.");
 	}
@@ -93,7 +98,8 @@ static void testDefaultConstructor(){
 	cout << "No issue." << endl;
 
 	try{
-		cout << "Trying to create bad square (col=9), expecting exception ..." << endl;
+		cout <<
+		"Trying to create bad square (col=9), expecting exception ..." << endl;
 		Square s(0,9);
 		assert(false && "Did not get expected exception.");
 	}
@@ -103,7 +109,8 @@ static void testDefaultConstructor(){
 	}
 
 	try{
-		cout << "Trying to create square at (-1,-1), expecting exception ..." << endl;
+		cout <<
+		"Trying to create square at (-1,-1), expecting exception ..." << endl;
 		Square s(-1,-1);
 		assert(false && "Did not get expected exception.");
 	}
@@ -178,4 +185,37 @@ static void testSetterConstructor(){
 			}
 		}
 	}
+}
+
+static void testCopyConstructor(){
+	cout << "\n***Testing copy constructor.***\n" << endl;
+
+	for(int row = 0; row < Square::puzzle_size; ++row){
+		for(int col = 0; col < Square::puzzle_size; ++col){
+			Square unset(row, col);
+			Square unsetCopy(unset);
+
+			assert(unset.getRow() == unsetCopy.getRow() && "Rows not equal?");
+			assert(unset.getCol() == unsetCopy.getCol() && "Cols not equal?");
+			assert(unset.isSet() == unsetCopy.isSet() && "isSet not equal?");
+			assert(unset.getPossibleValues() == unsetCopy.getPossibleValues()
+					&& "possibleValues not equal?");
+
+			for(int val = 1; val<=Square::puzzle_size; ++val){
+				Square set(row, col, val);
+				Square setCopy(set);
+				assert(set.getRow() == setCopy.getRow() &&
+						"Rows not equal?");
+				assert(set.getCol() == setCopy.getCol() &&
+						"Cols not equal?");
+				assert(set.isSet() == setCopy.isSet() &&
+						"isSet not equal?");
+				assert(set.getValue() == setCopy.getValue() &&
+						"values not equal?");
+				assert(unset.getPossibleValues() == unsetCopy.getPossibleValues()
+						&& "possibleValues not equal?");
+			}
+		}
+	}
+	cout << "No problems!"<< endl;
 }
