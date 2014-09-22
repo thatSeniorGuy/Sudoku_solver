@@ -19,6 +19,7 @@ void testSquare();
 static void testDefaultConstructor();
 static void testSetterConstructor();
 static void testCopyConstructor();
+static void testSetValue();
 
 
 void testSquare(){
@@ -27,6 +28,7 @@ void testSquare(){
 	testDefaultConstructor();
 	testSetterConstructor();
 	testCopyConstructor();
+	testSetValue();
 
 	cout << "*** All done! ***" << endl;
 }
@@ -218,4 +220,27 @@ static void testCopyConstructor(){
 		}
 	}
 	cout << "No problems!"<< endl;
+}
+
+static void testSetValue(){
+	// If value is not in proper range, exception should be thrown.
+	// If square is already set, false should be returned.
+	// If value is not in list of possible values, false should be returned.
+	// Otherwise, true should be returned, square should have value set,
+	// possible values should be set to that value.
+
+	cout << "\n***Testing setValue()***\n" << endl;
+
+	Square unset(0,0);
+	std::set<int> badValues = {-1,0,Square::puzzle_size+1, Square::puzzle_size+2};
+	for(auto badValue : badValues){
+		try{
+			unset.setValue(badValue);
+			assert(false && "Bad value set without issue?");
+		}
+		catch(std::out_of_range & e){
+			// No issue.
+		}
+	}
+
 }
