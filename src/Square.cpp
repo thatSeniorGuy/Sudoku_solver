@@ -17,7 +17,7 @@ Square::Square(int row, int col, int value) :
 		validateCoordinate(col);
 	}
 	catch (std::exception & e) {
-		throw e;
+		throw;
 	}
 
 	if(value < 1 || value > puzzle_size){
@@ -34,8 +34,8 @@ Square::Square(int row, int col) :
 		validateCoordinate(row);
 		validateCoordinate(col);
 	}
-	catch (std::exception * e) {
-		throw e;
+	catch (std::exception & e) {
+		throw;
 	}
 
 	for(int i = 1; i<=puzzle_size; i++){
@@ -81,7 +81,7 @@ void Square::setRow(int newRow){
 		row_ = newRow;
 	}
 	catch(std::out_of_range & e) {
-		throw e;
+		throw;
 	}
 }
 
@@ -91,7 +91,7 @@ void Square::setCol(int newCol){
 		col_ = newCol;
 	}
 	catch(std::out_of_range & e){
-		throw e;
+		throw;
 	}
 }
 
@@ -186,7 +186,7 @@ void Square::validatePosition(const Position & pos){
 		validateCoordinate(pos.col);
 	}
 	catch(std::out_of_range & e){
-		throw e;
+		throw;
 	}
 }
 
