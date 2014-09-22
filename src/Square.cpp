@@ -160,6 +160,11 @@ bool Square::restrictValues(std::initializer_list<int> vals){
 }
 
 Square & Square::operator=(const Square & other){
+
+	// Handle self-assignment.
+	if(this==&other)
+		return *this;
+
 	this->row_ = other.row_;
 	this->col_ = other.col_;
 	this->isSet_ = other.isSet_;
