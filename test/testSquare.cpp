@@ -146,12 +146,9 @@ static void testSetterConstructor(){
 	for(int i=0; i<=Square::puzzle_size; ++i)
 		valValues.insert(i);
 
-	for(auto colIt : posValues){
-		for(auto rowIt : posValues){
-			for(auto valIt: valValues){
-				int col = *colIt;
-				int row = *rowIt;
-				int val = *valIt;
+	for(auto col : posValues){
+		for(auto row : posValues){
+			for(auto val: valValues){
 				 // Invalid positions or values  should an std::out_of_range
 				if(col < 0 ||
 						col >= Square::puzzle_size ||
@@ -167,19 +164,18 @@ static void testSetterConstructor(){
 						// All good
 					}
 				}
-
-				Square s(row, col, val);
-				std::set<int> testSet({val});
-				assert(row==s.getRow() && "Square's row not set correctly?");
-				assert(col==s.getCol() && "Square's col not set correctly?");
-				assert(val==s.getValue() &&
-						"Square's value not set correctly?");
-				assert(s.isSet() && "Square is not set?");
-				assert(s.getPosition()==testSet &&
-						"possibleValues not set correctly?");
+				else{
+					Square s(row, col, val);
+					std::set<int> testSet({val});
+					assert(row==s.getRow() && "Square's row not set correctly?");
+					assert(col==s.getCol() && "Square's col not set correctly?");
+					assert(val==s.getValue() &&
+							"Square's value not set correctly?");
+					assert(s.isSet() && "Square is not set?");
+					assert(s.getPossibleValues()==testSet &&
+							"possibleValues not set correctly?");
+				}
 			}
 		}
 	}
-
-
 }
