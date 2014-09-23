@@ -12,6 +12,7 @@
 #include <cassert>
 #include <stdexcept>
 #include <vector>
+#include <sstream>
 
 using std::cout;
 using std::endl;
@@ -26,7 +27,6 @@ static void testSetRow();
 static void testSetCol();
 static void testRestrictValues();
 static void testToString();
-static void testShiftOperator();
 
 
 void testSquare(){
@@ -41,7 +41,6 @@ void testSquare(){
 	testSetCol();
 	testRestrictValues();
 	testToString();
-	testShiftOperator();
 
 	cout << "\n*** All done! ***" << endl;
 }
@@ -423,9 +422,24 @@ static void testRestrictValues(){
 }
 
 static void testToString(){
-	//TODO
-}
+	cout << "\n***Testing toString().***" << endl;
+	// For an unset Square, string is #
 
-static void testShiftOperator(){
-	//TODO
+	Square unset(0,0);
+	std::string unsetStr = unset.toString();
+	std::string hash = "#";
+	assert(hash==unsetStr &&
+			"An unset square doesn't have # as its representation?");
+
+	// For a set Square, string is number.
+	for(int val = 1; val <= Square::puzzle_size; ++val){
+		Square set(0,0,val);
+		std::string setStr = set.toString();
+		std::ostringstream oss;
+		oss << val;
+		assert(setStr==oss.str() &&
+				"Set square doesn't have number as its representation?");
+	}
+
+	cout << "No problems!"<< endl;
 }
