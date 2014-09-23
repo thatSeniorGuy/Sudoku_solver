@@ -253,35 +253,49 @@ static void testSetValue(){
 		}
 	}
 
+	std::set<int> validValues;
+	for(int val = 1; val <= Square::puzzle_size; ++val)
+		validValues.insert(val);
+
 	// If square is already set, false should be returned.
-	for(int setValue = 1; setValue <= Square::puzzle_size; ++setValue){
-		Square setSquare(0,0,setValue);
-		for(int attemptValue = 1; attemptValue <= Square::puzzle_size; ++attemptValue){
+	for(auto val : validValues){
+		Square setSquare(0,0,val);
+		for(auto attemptValue : validValues){
 			bool ret = setSquare.setValue(attemptValue);
 			assert(!ret && "Was able to set the value of a set square?");
 		}
 	}
 
 	// If value is not in list of possible values, false should be returned.
-	// TODO Don't really have a way to test this with having restrictValues
-	// working.
+	for(auto val : validValues){
+		for(auto attempVal : validValues){
+			Square s(0,0);
+			s.restrictValues({val});
+			if(attempVal==val)
+				assert(!s.setValue(attempVal) &&
+						"setValue returned true for an non-possible value?");
+
+			else
+				assert(s.setValue(attempVal) &&
+						"setValue returned false for a possible value?");
+		}
+	}
 
 	// Otherwise, true should be returned, square should have value set,
 	// possible values should be set to that value.
-	for(int setValue = 1; setValue <= Square::puzzle_size; ++setValue){
+	for(auto val : validValues){
 		Square unset(0,0);
-		bool ret = unset.setValue(setValue);
+		bool ret = unset.setValue(val);
 
-		std::set<int> squaresPossibleValues{setValue};
+		std::set<int> squaresPossibleValues{val};
 
 		assert(ret && "Square was not set?");
-		assert(setValue == unset.getValue() && "Square did get proper value?");
+		assert(val == unset.getValue() && "Square did get proper value?");
 		assert(squaresPossibleValues==unset.getPossibleValues() &&
 				"Possible values don't match up?");
 	}
 
 	cout << "No problems!" << endl;
-
 }
 
 static void testAssignment(){
