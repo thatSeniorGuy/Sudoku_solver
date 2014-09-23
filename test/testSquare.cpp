@@ -20,6 +20,7 @@ static void testDefaultConstructor();
 static void testSetterConstructor();
 static void testCopyConstructor();
 static void testSetValue();
+static void testAssignment();
 
 
 void testSquare(){
@@ -29,6 +30,7 @@ void testSquare(){
 	testSetterConstructor();
 	testCopyConstructor();
 	testSetValue();
+	testAssignment();
 
 	cout << "*** All done! ***" << endl;
 }
@@ -146,7 +148,7 @@ static void testDefaultConstructor(){
 }
 
 static void testSetterConstructor(){
-	cout << "\n***Testing 'setter' constructor.***\n" << endl;
+	cout << "\n***Testing 'setter' constructor.***" << endl;
 
 	std::set<int> posValues;
 	std::set<int> valValues;
@@ -187,10 +189,11 @@ static void testSetterConstructor(){
 			}
 		}
 	}
+	cout << "No problems!" << endl;
 }
 
 static void testCopyConstructor(){
-	cout << "\n***Testing copy constructor.***\n" << endl;
+	cout << "\n***Testing copy constructor.***" << endl;
 
 	for(int row = 0; row < Square::puzzle_size; ++row){
 		for(int col = 0; col < Square::puzzle_size; ++col){
@@ -214,7 +217,7 @@ static void testCopyConstructor(){
 						"isSet not equal?");
 				assert(set.getValue() == setCopy.getValue() &&
 						"values not equal?");
-				assert(unset.getPossibleValues() == unsetCopy.getPossibleValues()
+				assert(set.getPossibleValues() == setCopy.getPossibleValues()
 						&& "possibleValues not equal?");
 			}
 		}
@@ -223,13 +226,9 @@ static void testCopyConstructor(){
 }
 
 static void testSetValue(){
-	// If value is not in proper range, exception should be thrown.
-	// If square is already set, false should be returned.
-	// If value is not in list of possible values, false should be returned.
-	// Otherwise, true should be returned, square should have value set,
-	// possible values should be set to that value.
+	// If value is not in proper range, a std::out_of_range should be thrown.
 
-	cout << "\n***Testing setValue()***\n" << endl;
+	cout << "\n***Testing setValue()***" << endl;
 
 	Square unset(0,0);
 	std::set<int> badValues = {-1,0,Square::puzzle_size+1, Square::puzzle_size+2};
@@ -243,4 +242,45 @@ static void testSetValue(){
 		}
 	}
 
+	// If square is already set, false should be returned.
+
+
+	// If value is not in list of possible values, false should be returned.
+	// Otherwise, true should be returned, square should have value set,
+	// possible values should be set to that value.
+
+}
+
+static void testAssignment(){
+	cout << "\n***Testing assignment operator.***\n" << endl;
+
+	for(int row = 0; row < Square::puzzle_size; ++row){
+		for(int col = 0; col < Square::puzzle_size; ++col){
+			Square unset(row, col);
+			Square assignee;
+			assignee = unset;
+
+			assert(unset.getRow() == assignee.getRow() && "Rows not equal?");
+			assert(unset.getCol() == assignee.getCol() && "Cols not equal?");
+			assert(unset.isSet() == assignee.isSet() && "isSet not equal?");
+			assert(unset.getPossibleValues() == assignee.getPossibleValues()
+					&& "possibleValues not equal?");
+
+			for(int val = 1; val<=Square::puzzle_size; ++val){
+				Square set(row, col, val);
+				Square setAssignee;
+				assert(set.getRow() == setAssignee.getRow() &&
+						"Rows not equal?");
+				assert(set.getCol() == setAssignee.getCol() &&
+						"Cols not equal?");
+				assert(set.isSet() == setAssignee.isSet() && //TODO failed?
+						"isSet not equal?");
+				assert(set.getValue() == setAssignee.getValue() &&
+						"values not equal?");
+				assert(set.getPossibleValues() == setAssignee.getPossibleValues()
+						&& "possibleValues not equal?");
+			}
+		}
+	}
+	cout << "No problems!"<< endl;
 }
