@@ -11,6 +11,7 @@
 #include <iostream>
 #include <cassert>
 #include <stdexcept>
+#include <vector>
 
 using std::cout;
 using std::endl;
@@ -365,7 +366,46 @@ static void testSetCol(){
 }
 
 static void testRestrictValues(){
+	cout << "\n***Testing restrictValues().***" << endl;
+
+	// Invalid passed values should throw a std::out_of_range
+	for(int value = -1; value < Square::puzzle_size+2; ++value){
+		Square unset(0,0);
+		if(value < 1 || value > Square::puzzle_size){
+			try{
+				unset.restrictValues({value});
+				assert(false && "Did not get expected exception?");
+			}
+			catch(std::out_of_range & e){
+				// All good.
+			}
+		}
+		else{
+			// Should not get exception here.
+			unset.restrictValues({value});
+		}
+	}
+
+	// If Square has only one value, square should be set.
+	std::set<int> values;
+	Square unsetSquare(0,0);
+	for(int i = 1; i<=Square::puzzle_size; ++i)
+		values.insert(i);
+
 	//TODO
+	for(auto valToSkip: values){
+		std::set<int> cpy(values);
+		cpy.erase(valToSkip);
+		unsetSquare.restrictValues(cpy);
+
+	}
+
+
+
+	// Ret value: true if square changed to set, false otherwise or if Square
+	// was already set.
+
+	cout << "No problems!"<< endl;
 }
 
 static void testToString(){
