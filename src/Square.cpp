@@ -152,9 +152,6 @@ bool Square::restrictValues(std::initializer_list<int> vals){
 			isSet_ = true;
 			return true;
 		}
-
-		if(possibleValues_.size() == 0)
-			throw std::logic_error("Square has been left with no possible values.");
 	}
 
 	return false;

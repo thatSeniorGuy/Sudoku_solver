@@ -155,9 +155,7 @@ public:
 	 *
 	 * This method attempts to restrict the values that this Square could
 	 * possibly have. If at any point there is only one possible value that
-	 * this Square could have, then it will be set to that value. If at any
-	 * point this Square has no possible values, then a std::logic_error will
-	 * be thrown.
+	 * this Square could have, then it will be set to that value.
 	 *
 	 * \param vals The list of values to take away from this Square's list of
 	 * possible values. If any of them are less than one or greater than
