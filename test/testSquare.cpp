@@ -32,7 +32,7 @@ void testSquare(){
 	testSetValue();
 	testAssignment();
 
-	cout << "*** All done! ***" << endl;
+	cout << "\n*** All done! ***" << endl;
 }
 
 static void testDefaultConstructor(){
@@ -243,16 +243,38 @@ static void testSetValue(){
 	}
 
 	// If square is already set, false should be returned.
-
+	for(int setValue = 1; setValue <= Square::puzzle_size; ++setValue){
+		Square setSquare(0,0,setValue);
+		for(int attemptValue = 1; attemptValue <= Square::puzzle_size; ++attemptValue){
+			bool ret = setSquare.setValue(attemptValue);
+			assert(!ret && "Was able to set the value of a set square?");
+		}
+	}
 
 	// If value is not in list of possible values, false should be returned.
+	// TODO Don't really have a way to test this with having restrictValues
+	// working.
+
 	// Otherwise, true should be returned, square should have value set,
 	// possible values should be set to that value.
+	for(int setValue = 1; setValue <= Square::puzzle_size; ++setValue){
+		Square unset(0,0);
+		bool ret = unset.setValue(setValue);
+
+		std::set<int> squaresPossibleValues{setValue};
+
+		assert(ret && "Square was not set?");
+		assert(setValue == unset.getValue() && "Square did get proper value?");
+		assert(squaresPossibleValues==unset.getPossibleValues() &&
+				"Possible values don't match up?");
+	}
+
+	cout << "No problems!" << endl;
 
 }
 
 static void testAssignment(){
-	cout << "\n***Testing assignment operator.***\n" << endl;
+	cout << "\n***Testing assignment operator.***" << endl;
 
 	for(int row = 0; row < Square::puzzle_size; ++row){
 		for(int col = 0; col < Square::puzzle_size; ++col){
@@ -269,11 +291,12 @@ static void testAssignment(){
 			for(int val = 1; val<=Square::puzzle_size; ++val){
 				Square set(row, col, val);
 				Square setAssignee;
+				setAssignee = set;
 				assert(set.getRow() == setAssignee.getRow() &&
 						"Rows not equal?");
 				assert(set.getCol() == setAssignee.getCol() &&
 						"Cols not equal?");
-				assert(set.isSet() == setAssignee.isSet() && //TODO failed?
+				assert(set.isSet() == setAssignee.isSet() &&
 						"isSet not equal?");
 				assert(set.getValue() == setAssignee.getValue() &&
 						"values not equal?");
