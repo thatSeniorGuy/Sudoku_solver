@@ -166,7 +166,7 @@ public:
 	 * at least two possible values. Return's true if by the end of this
 	 * method, the Square is set.
 	 */
-	bool restrictValues(std::initializer_list<int> vals);
+	bool restrictValues(std::set<int> vals);
 
 	/**
 	 * \brief Assignment operator.

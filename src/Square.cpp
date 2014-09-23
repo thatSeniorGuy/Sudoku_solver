@@ -124,7 +124,7 @@ std::set<int> Square::getPossibleValues() const {
 	return possibleValues_;
 }
 
-bool Square::restrictValues(std::initializer_list<int> vals){
+bool Square::restrictValues(std::set<int> vals){
 	// If this square is already set, then there's no point in continuing.
 	if(isSet_)
 		return false;
