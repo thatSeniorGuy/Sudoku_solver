@@ -26,6 +26,17 @@ public:
 	 *
 	 */
 	static const int puzzle_size = 9;
+
+	class PuzzleFileException : std::runtime_error{
+		//TODO here
+		enum Reason{
+			TOO_FEW_LINES,
+			LINE_TOO_SHORT,
+			INVALID_VALUE
+		} reason;
+
+	};
+
 public:
 
 	/** @name Constructors and destructors */
@@ -54,12 +65,9 @@ public:
 	 * \brief Overload of assignment operator.
 	 *
 	 * This \ref Puzzle is set to be an exact copy for the 'other' Puzzle, with
-	 * its own set of Square initialised to a copy of other's set of Squares.
+	 * its own set of Square's initialised to a copy of other's set of Squares.
 	 */
 	Puzzle & operator=(const Puzzle & other);
-
-
-
 
 private:
 	std::vector<Square> squares_;

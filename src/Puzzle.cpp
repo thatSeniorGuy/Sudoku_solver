@@ -25,7 +25,7 @@ Puzzle::Puzzle(std::string filename) :
 		squares_(puzzle_size*puzzle_size),
 		solved_(false),
 		numLeftToSolve_(puzzle_size*puzzle_size){
-	//TODO make custom exception and divide this code up.
+
 	std::ifstream inFile(filename);
 	if(inFile.good()){
 
@@ -78,6 +78,7 @@ Puzzle::Puzzle(std::string filename) :
 			success = false;
 
 		if(!success){
+			//TODO make custom exception and divide this code up.
 			std::ostringstream oss;
 			oss << "Error in processing file '" << filename << "'.";
 			throw std::runtime_error(oss.str());
