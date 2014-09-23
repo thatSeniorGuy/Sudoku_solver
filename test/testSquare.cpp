@@ -388,19 +388,19 @@ static void testRestrictValues(){
 
 	// If Square has only one value, square should be set.
 	std::set<int> values;
-	Square unsetSquare(0,0);
 	for(int i = 1; i<=Square::puzzle_size; ++i)
 		values.insert(i);
 
-	//TODO
 	for(auto valToSkip: values){
 		std::set<int> cpy(values);
 		cpy.erase(valToSkip);
-		unsetSquare.restrictValues(cpy);
-
+		Square square(0,0);
+		bool ret = square.restrictValues(cpy);
+		assert(ret && "Function did not return true?");
+		assert(square.isSet() && "Square did not end up being set?");
+		assert(square.getValue()==valToSkip &&
+				"Square did not end up getting correct value?");
 	}
-
-
 
 	// Ret value: true if square changed to set, false otherwise or if Square
 	// was already set.
