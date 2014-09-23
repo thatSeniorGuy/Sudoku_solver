@@ -168,6 +168,7 @@ Square & Square::operator=(const Square & other){
 	this->row_ = other.row_;
 	this->col_ = other.col_;
 	this->isSet_ = other.isSet_;
+	this->value_ = other.value_;
 	this->possibleValues_ = other.possibleValues_;
 	return *this;
 }
