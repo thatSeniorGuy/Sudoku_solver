@@ -21,6 +21,11 @@ static void testSetterConstructor();
 static void testCopyConstructor();
 static void testSetValue();
 static void testAssignment();
+static void testSetRow();
+static void testSetCol();
+static void testRestrictValues();
+static void testToString();
+static void testShiftOperator();
 
 
 void testSquare(){
@@ -31,6 +36,11 @@ void testSquare(){
 	testCopyConstructor();
 	testSetValue();
 	testAssignment();
+	testSetRow();
+	testSetCol();
+	testRestrictValues();
+	testToString();
+	testShiftOperator();
 
 	cout << "\n*** All done! ***" << endl;
 }
@@ -306,4 +316,62 @@ static void testAssignment(){
 		}
 	}
 	cout << "No problems!"<< endl;
+}
+
+static void testSetRow(){
+	cout << "\n***Testing setRow().***" << endl;
+	Square s(0,0);
+
+	for(int newRow = -1; newRow <= Square::puzzle_size; ++newRow){
+		// These values of newRow should cause errors.
+		if(newRow < 0 || newRow > Square::puzzle_size-1){
+			try{
+				s.setRow(newRow);
+				assert(false && "Did not get expected exception?");
+			}
+			catch(std::out_of_range & e){
+				// All good.
+			}
+		}
+		else{
+			s.setRow(newRow);
+			assert(s.getRow()==newRow && "Row not set properly?");
+		}
+	}
+	cout << "No problems!"<< endl;
+}
+
+static void testSetCol(){
+	cout << "\n***Testing setCol().***" << endl;
+		Square s(0,0);
+
+		for(int newCol = -1; newCol <= Square::puzzle_size; ++newCol){
+			// These values of newCol should cause errors.
+			if(newCol < 0 || newCol > Square::puzzle_size-1){
+				try{
+					s.setCol(newCol);
+					assert(false && "Did not get expected exception?");
+				}
+				catch(std::out_of_range & e){
+					// All good.
+				}
+			}
+			else{
+				s.setCol(newCol);
+				assert(s.getCol()==newCol && "Col not set properly?");
+			}
+		}
+		cout << "No problems!"<< endl;
+}
+
+static void testRestrictValues(){
+	//TODO
+}
+
+static void testToString(){
+	//TODO
+}
+
+static void testShiftOperator(){
+	//TODO
 }
