@@ -66,6 +66,7 @@ bool Square::setValue(int newValue){
 		return false;
 
 	value_ = newValue;
+	isSet_ = true;
 	possibleValues_.clear();
 
 	auto ret = possibleValues_.insert(value_);
