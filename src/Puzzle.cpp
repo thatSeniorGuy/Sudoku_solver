@@ -11,47 +11,29 @@
 #include <sstream>
 
 Puzzle::Puzzle() :
-	squares_(nullptr),
+	squares_(puzzle_size*puzzle_size),
 	solved_(false),
 	numLeftToSolve_(puzzle_size*puzzle_size) {
 
-	squares_ = new Square[puzzle_size*puzzle_size];
+	for(int i = 0; i < puzzle_size*puzzle_size; i++){
+		squares_[i].setRow(i/puzzle_size);
+		squares_[i].setCol(i%puzzle_size);
+	}
+}
 
-	try{
+Puzzle::Puzzle(std::string filename) :
+		squares_(puzzle_size*puzzle_size),
+		solved_(false),
+		numLeftToSolve_(puzzle_size*puzzle_size){
+	//TODO make custom exception and divide this code up.
+	std::ifstream inFile(filename);
+	if(inFile.good()){
+
 		for(int i = 0; i < puzzle_size*puzzle_size; i++){
 			squares_[i].setRow(i/puzzle_size);
 			squares_[i].setCol(i%puzzle_size);
 		}
-	}
-	catch (std::out_of_range & e) {
-		// The for loop above shouldn't throw any exceptions, but ...
-		delete[] squares_;
-		throw e;
-	}
 
-}
-
-Puzzle::Puzzle(std::string filename) :
-		squares_(nullptr),
-		solved_(false),
-		numLeftToSolve_(puzzle_size*puzzle_size){
-	//TODO change squares_ into a std::vector<Square>. It will make things so much easier.
-	//TODO make custom exception and divide this code up.
-	std::ifstream inFile(filename);
-	if(inFile.good()){
-		squares_ = new Square[puzzle_size*puzzle_size];
-
-		try{
-			for(int i = 0; i < puzzle_size*puzzle_size; i++){
-				squares_[i].setRow(i/puzzle_size);
-				squares_[i].setCol(i%puzzle_size);
-			}
-		}
-		catch (std::out_of_range & e) {
-			// The for loop above shouldn't throw any exceptions, but ...
-			delete[] squares_;
-			throw e;
-		}
 
 		std::string line;
 		int currentRow=0;
@@ -96,13 +78,10 @@ Puzzle::Puzzle(std::string filename) :
 			success = false;
 
 		if(!success){
-			delete[] squares_;
 			std::ostringstream oss;
 			oss << "Error in processing file '" << filename << "'.";
 			throw std::runtime_error(oss.str());
 		}
-
-		//TODO check if valid?
 	}
 	else{
 		std::ostringstream oss;
@@ -113,34 +92,18 @@ Puzzle::Puzzle(std::string filename) :
 }
 
 Puzzle::Puzzle(const Puzzle & other) :
-		squares_(nullptr),
+		squares_(other.squares_),
 		solved_(other.solved_),
-		numLeftToSolve_(other.numLeftToSolve_){
-	squares_ = new Square[puzzle_size*puzzle_size];
-	for(int i = 0; i < puzzle_size*puzzle_size; i++){
-		squares_[i] = other.squares_[i];
-	}
-}
+		numLeftToSolve_(other.numLeftToSolve_)
+{}
 
 Puzzle & Puzzle::operator=(const Puzzle & other){
-
 	// Handle self-assignment.
 	if(this==&other)
 		return *this;
 
 	solved_ = other.solved_;
 	numLeftToSolve_ = other.numLeftToSolve_;
-
-	delete[] squares_;
-	squares_ = nullptr;
-
-	squares_ = new Square[puzzle_size*puzzle_size];
-	for(int i = 0; i < puzzle_size*puzzle_size; i++)
-		squares_[i] = other.squares_[i];
-
+	squares_ = other.squares_;
 	return *this;
-}
-
-Puzzle::~Puzzle() {
-	delete[] squares_;
 }

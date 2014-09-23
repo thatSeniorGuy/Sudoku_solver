@@ -12,6 +12,7 @@
 
 #include <iostream>
 #include <string>
+#include <vector>
 #include "Square.h"
 
 /** \class Puzzle
@@ -47,13 +48,6 @@ public:
 	 */
 	Puzzle(const Puzzle & other);
 
-
-
-
-	/**
-	 * \brief Deletes all the Squares created in either constructor.
-	 */
-	~Puzzle();
 	/**@}*/
 
 	/**
@@ -68,7 +62,7 @@ public:
 
 
 private:
-	Square * squares_;
+	std::vector<Square> squares_;
 	bool solved_;
 	int numLeftToSolve_;
 };
