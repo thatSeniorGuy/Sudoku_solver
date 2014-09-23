@@ -35,6 +35,7 @@ Puzzle::Puzzle(std::string filename) :
 		squares_(nullptr),
 		solved_(false),
 		numLeftToSolve_(puzzle_size*puzzle_size){
+	//TODO change squares_ into a std::vector<Square>. It will make things so much easier.
 	//TODO make custom exception and divide this code up.
 	std::ifstream inFile(filename);
 	if(inFile.good()){
