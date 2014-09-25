@@ -17,8 +17,6 @@ Puzzle::PuzzleFileException::PuzzleFileException(
 		int length,
 		char invalidValue) :
 		reason_(reason),
-		filename_(nullptr),
-		line_(nullptr),
 		length_(length),
 		invalidValue_(invalidValue)
 {
