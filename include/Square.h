@@ -175,6 +175,7 @@ public:
 	 */
 	Square & operator=(const Square & other);
 
+	//TODO just change this to return a bool, and change constructors as well.
 	/**
 	 * \brief Validates the given co-ordinate (either a row or a col).
 	 *
