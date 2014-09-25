@@ -14,6 +14,7 @@
 #include <string>
 #include <vector>
 #include "Square.h"
+#include <stdexcept>
 
 /** \class Puzzle
  * //TODO
@@ -27,14 +28,41 @@ public:
 	 */
 	static const int puzzle_size = 9;
 
-	class PuzzleFileException : std::runtime_error{
+	class PuzzleFileException : public std::runtime_error {
 		//TODO here
 		enum Reason{
 			TOO_FEW_LINES,
-			LINE_TOO_SHORT,
+			INVALID_LINE_LENGTH,
 			INVALID_VALUE
-		} reason;
+		};
+	public:
+// Make static methods to construct exceptions.
+		static PuzzleFileException tooFewLines(char * filename);
+		static PuzzleFileException invalidLineLength(
+				char * filename,
+				char * line,
+				int lineLength);
+		static PuzzleFileException invalidValue(
+				char * filename,
+				char * line,
+				char invalidValue);
+		virtual ~PuzzleFileException() {};
+		virtual const char * what();
+	protected:
+		PuzzleFileException(
+				Reason reason,
+				char * filename,
+				char * line = NULL,
+				int length = 0,
+				char invalidValue = '?');
 
+	protected:
+		char whatMessage_[256];
+		Reason reason_;
+		char filename_[60];
+		char line_;
+		int length_;
+		char invalidValue_;
 	};
 
 public:

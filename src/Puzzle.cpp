@@ -10,6 +10,43 @@
 #include <fstream>
 #include <sstream>
 
+Puzzle::PuzzleFileException::PuzzleFileException(
+		Reason reason,
+		char * filename,
+		char * line,
+		int length,
+		char invalidValue) :
+		reason_(reason),
+		filename_(nullptr),
+		line_(nullptr),
+		length_(length),
+		invalidValue_(invalidValue)
+{
+	switch(reason_){
+	case TOO_FEW_LINES:
+		// Only thing that needs to be set is filename.
+
+		break;
+
+	case INVALID_LINE_LENGTH:
+
+		break;
+
+	case INVALID_VALUE:
+
+		break;
+	}
+
+}
+
+const char * Puzzle::PuzzleFileException::what(){
+
+
+
+
+	return whatMessage_;
+}
+
 Puzzle::Puzzle() :
 	squares_(puzzle_size*puzzle_size),
 	solved_(false),
