@@ -144,6 +144,7 @@ public:
 		 */
 		PuzzleFileException & operator=(const PuzzleFileException & other);
 
+	//TODO change to private.
 	protected:
 		/**
 		 * \brief Protected constructor for the class.
