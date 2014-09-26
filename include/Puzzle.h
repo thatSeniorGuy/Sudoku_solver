@@ -96,7 +96,7 @@ public:
 	Puzzle & operator=(const Puzzle & other);
 
 private:
-	std::vector<Square> squares_;
+	Square squares_[puzzle_size * puzzle_size];
 	bool solved_;
 	int numLeftToSolve_;
 };

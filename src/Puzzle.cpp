@@ -86,7 +86,7 @@ const char * Puzzle::PuzzleFileException::what(){
 }
 
 Puzzle::Puzzle() :
-	squares_(puzzle_size*puzzle_size),
+	//squares_(puzzle_size*puzzle_size),
 	solved_(false),
 	numLeftToSolve_(puzzle_size*puzzle_size) {
 
@@ -97,7 +97,7 @@ Puzzle::Puzzle() :
 }
 
 Puzzle::Puzzle(std::string filename) :
-		squares_(puzzle_size*puzzle_size),
+		//squares_(puzzle_size*puzzle_size),
 		solved_(false),
 		numLeftToSolve_(puzzle_size*puzzle_size){
 
@@ -180,6 +180,8 @@ Puzzle & Puzzle::operator=(const Puzzle & other){
 
 	solved_ = other.solved_;
 	numLeftToSolve_ = other.numLeftToSolve_;
-	squares_ = other.squares_;
+	for(int i = 0; i < puzzle_size*puzzle_size; ++i)
+		squares_[i] = other.squares_[i];
+
 	return *this;
 }
