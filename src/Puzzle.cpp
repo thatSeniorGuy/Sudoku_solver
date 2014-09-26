@@ -160,6 +160,11 @@ Puzzle::PuzzleFileException::operator=(
 	return *this;
 }
 
+Puzzle::PuzzleFileException::Reason
+Puzzle::PuzzleFileException::getReason() const {
+	return reason_;
+}
+
 Puzzle::Puzzle() :
 	//squares_(puzzle_size*puzzle_size),
 	solved_(false),

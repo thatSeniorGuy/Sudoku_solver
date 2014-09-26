@@ -28,6 +28,14 @@ public:
 	 */
 	static const int puzzle_size = 9;
 
+	/**
+	 * \class PuzzleFileException
+	 *
+	 * \brief Exception thrown by the file constructor for \ref Puzzle when it
+	 * encounters an invalid file.
+	 *
+	 *
+	 */
 	class PuzzleFileException : public std::runtime_error {
 		enum Reason{
 			TOO_FEW_LINES,
@@ -46,6 +54,7 @@ public:
 				char invalidValue);
 		virtual ~PuzzleFileException() throw () {} ;
 		virtual const char * what();
+		Reason getReason() const;
 
 		PuzzleFileException(const PuzzleFileException & other);
 		PuzzleFileException & operator=(const PuzzleFileException & other);
