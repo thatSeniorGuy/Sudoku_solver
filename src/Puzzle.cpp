@@ -38,7 +38,8 @@ Puzzle::PuzzleFileException::PuzzleFileException(
 	if(filename != nullptr){
 		int fileNameLength = strlen(filename);
 		// Last char is for null character.
-		strncpy(filename_, filename, fileNameLength>59 ? 59 : fileNameLength);
+		strncpy(filename_, filename,
+				fileNameLength>(STR_LEN-1) ? (STR_LEN-1) : fileNameLength);
 	}
 	else{
 		strcpy(filename_, "Filename not provided correctly.");
@@ -53,7 +54,6 @@ Puzzle::PuzzleFileException::PuzzleFileException(
 
 	case INVALID_LINE_LENGTH:
 	case INVALID_VALUE:
-
 		// Both cases need to set line_.
 		// For INVALID_LINE_LENGTH, need to set length (done in member
 		// initialisation), and  for INVALID_VALUE, need to set need to set
@@ -61,14 +61,12 @@ Puzzle::PuzzleFileException::PuzzleFileException(
 		if(line != nullptr){
 			int lineLength = strlen(line);
 			// Restrict to line_'s size, last char is the null character,
-			strncpy(line_, line, lineLength>59 ? 59 : lineLength);
+			strncpy(line_, line,
+					lineLength>(STR_LEN-1) ? (STR_LEN-1) : lineLength);
 		}
 		else{
 			strcpy(line_, "Line not provided correctly.");
 		}
-
-
-
 		break;
 	}
 }
@@ -135,10 +133,10 @@ Puzzle::PuzzleFileException::PuzzleFileException(
 	for(auto & cha : whatMessage_)
 		cha = '\0';
 
-	for(int i = 0; i < 60; ++i)
+	for(int i = 0; i < STR_LEN; ++i)
 			filename_[i] = other.filename_[i];
 
-	for(int i = 0; i < 60; ++i)
+	for(int i = 0; i < STR_LEN; ++i)
 		line_[i] = other.line_[i];
 }
 
