@@ -34,15 +34,39 @@ public:
 	 * \brief Exception thrown by the file constructor for \ref Puzzle when it
 	 * encounters an invalid file.
 	 *
-	 *
+	 * The enum Reason contains the reason why this exception was thrown, and
+	 * the exception itself contains more information on how the file is
+	 * invalid. The class uses named constructors for users to create
+	 * PuzzleFileExceptions.
 	 */
 	class PuzzleFileException : public std::runtime_error {
+		/**
+		 * \enum Reason
+		 * \brief Details why the PuzzleFileException was thrown.
+		 *
+		 * TOO_FEW_LINES: the file contained too few lines to construct a full
+		 * Sudoku puzzle.
+		 * INVALID_LINE_LENGTH: one of the lines in the file was either too
+		 * large or too small.
+		 * INVALID_VALUE: one of the lines in the file contained an invalid
+		 * value.
+		 */
 		enum Reason{
 			TOO_FEW_LINES,
 			INVALID_LINE_LENGTH,
 			INVALID_VALUE
 		};
 	public:
+		/** @name Named constructors.*/
+		/**@{*/
+		/**
+		 * \brief Creates a PuzzleFileException with its reason set to
+		 * TOO_FEW_LINES, for the given file.
+		 *
+		 * \param filename Char pointer to the offending file. If the string is
+		 * larger than 59 characters, it will be restricted to 59 characters.
+		 * If a nullptr is passed, the filename will be noted as invalid.
+		 */
 		static PuzzleFileException tooFewLines(const char * filename);
 		static PuzzleFileException invalidLineLength(
 				const char * filename,
@@ -52,6 +76,8 @@ public:
 				const char * filename,
 				const char * line,
 				char invalidValue);
+		/**@}*/
+
 		virtual ~PuzzleFileException() throw () {} ;
 		virtual const char * what();
 		Reason getReason() const;
