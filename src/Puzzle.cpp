@@ -9,35 +9,75 @@
 #include <stdexcept>
 #include <fstream>
 #include <sstream>
+#include <cstring>
 
 Puzzle::PuzzleFileException::PuzzleFileException(
 		Reason reason,
-		char * filename,
-		char * line,
+		const char * filename,
+		const char * line,
 		int length,
 		char invalidValue) :
+		std::runtime_error(""),
 		reason_(reason),
 		length_(length),
 		invalidValue_(invalidValue)
 {
+	// Zero-out all of our char arrays.
+	for(auto & cha : whatMessage_)
+		cha = '\0';
+
+	for(auto & cha : line_)
+		cha = '\0';
+
+	for(auto & cha : filename_)
+		cha = '\0';
+
+	/* In all cases, we want to set the filename; restrict it to the size of
+	 * our fileName_ member. */
+	int fileNameLength = strlen(filename);
+	// Last char is for null character.
+	strncpy(filename_, filename, fileNameLength>59 ? 59 : fileNameLength);
+
 	switch(reason_){
 	case TOO_FEW_LINES:
-		// Only thing that needs to be set is filename.
-
+		// Filename is the only thing that needs to be set, so don't have to
+		// do anything.
 		break;
 
 	case INVALID_LINE_LENGTH:
-
-		break;
-
 	case INVALID_VALUE:
 
+		// Both cases need to set line_.
+		// For INVALID_LINE_LENGTH, need to set length (done in member
+		// initialisation), and  for INVALID_VALUE, need to set need to set
+		// invalid value (also done in member initialisation).
+		int lineLength = strlen(line);
+		// Restrict to line_'s size, last char is the null character,
+		strncpy(line_, line, lineLength>59 ? 59 : lineLength);
 		break;
 	}
+}
 
+Puzzle::PuzzleFileException Puzzle::PuzzleFileException::tooFewLines(
+		const char * fileName) {
+	return PuzzleFileException(TOO_FEW_LINES, fileName);
+}
+
+Puzzle::PuzzleFileException
+Puzzle::PuzzleFileException::invalidLineLength(
+		const char * filename, const char * line, int lineLength){
+	return PuzzleFileException(
+			INVALID_LINE_LENGTH, filename, line, lineLength);
+}
+
+Puzzle::PuzzleFileException
+Puzzle::PuzzleFileException::invalidValue(
+		const char * filename, const char * line, char invalidValue){
+	return PuzzleFileException(INVALID_VALUE, filename, line, 0, invalidValue);
 }
 
 const char * Puzzle::PuzzleFileException::what(){
+	//TODO
 
 
 

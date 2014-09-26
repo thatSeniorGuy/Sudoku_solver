@@ -29,30 +29,28 @@ public:
 	static const int puzzle_size = 9;
 
 	class PuzzleFileException : public std::runtime_error {
-		//TODO here
 		enum Reason{
 			TOO_FEW_LINES,
 			INVALID_LINE_LENGTH,
 			INVALID_VALUE
 		};
 	public:
-// Make static methods to construct exceptions.
-		static PuzzleFileException tooFewLines(char * filename);
+		static PuzzleFileException tooFewLines(const char * filename);
 		static PuzzleFileException invalidLineLength(
-				char * filename,
-				char * line,
+				const char * filename,
+				const char * line,
 				int lineLength);
 		static PuzzleFileException invalidValue(
-				char * filename,
-				char * line,
+				const char * filename,
+				const char * line,
 				char invalidValue);
-		virtual ~PuzzleFileException() {};
+		virtual ~PuzzleFileException() throw () {} ;
 		virtual const char * what();
 	protected:
 		PuzzleFileException(
 				Reason reason,
-				char * filename,
-				char * line = NULL,
+				const char * filename,
+				const char * line = NULL,
 				int length = 0,
 				char invalidValue = '?');
 
@@ -60,7 +58,7 @@ public:
 		char whatMessage_[256];
 		Reason reason_;
 		char filename_[60];
-		char line_;
+		char line_[60];
 		int length_;
 		char invalidValue_;
 	};
