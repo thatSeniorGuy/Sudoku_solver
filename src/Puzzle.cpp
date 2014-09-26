@@ -22,10 +22,11 @@ Puzzle::PuzzleFileException::PuzzleFileException(
 		length_(length),
 		invalidValue_(invalidValue)
 {
-	// Zero-out all of our char arrays.
+	// Zero out whatMessage (will be constructed when what() is called.
 	for(auto & cha : whatMessage_)
 		cha = '\0';
 
+	// Zero out the rest as well.
 	for(auto & cha : line_)
 		cha = '\0';
 
@@ -121,6 +122,24 @@ const char * Puzzle::PuzzleFileException::what(){
 	}
 
 	return whatMessage_;
+}
+
+Puzzle::PuzzleFileException::PuzzleFileException(
+		const PuzzleFileException & other) :
+			std::runtime_error(""),
+			reason_(other.reason_),
+			length_(other.length_),
+			invalidValue_(other.invalidValue_)
+{
+	// Zero out whatMessage (will be constructed when what() is called.
+	for(auto & cha : whatMessage_)
+		cha = '\0';
+
+	for(int i = 0; i < 60; ++i)
+			filename_[i] = other.filename_[i];
+
+	for(int i = 0; i < 60; ++i)
+		line_[i] = other.line_[i];
 }
 
 Puzzle::Puzzle() :

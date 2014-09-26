@@ -46,6 +46,8 @@ public:
 				char invalidValue);
 		virtual ~PuzzleFileException() throw () {} ;
 		virtual const char * what();
+		PuzzleFileException(const PuzzleFileException & other);
+		PuzzleFileException & operator=(const PuzzleFileException & other);
 		//TODO add copy constructor and assignment operator.
 	protected:
 		PuzzleFileException(
