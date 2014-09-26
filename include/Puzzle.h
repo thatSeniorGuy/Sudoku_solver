@@ -59,6 +59,7 @@ public:
 	public:
 		/** @name Named constructors.*/
 		/**@{*/
+
 		/**
 		 * \brief Creates a PuzzleFileException with its reason set to
 		 * TOO_FEW_LINES, for the given file.
@@ -68,24 +69,88 @@ public:
 		 * If a nullptr is passed, the filename will be noted as invalid.
 		 */
 		static PuzzleFileException tooFewLines(const char * filename);
+
+		/**
+		 * \brief Creates a PuzzleFileException with its reason set to
+		 * INVALID_LINE_LENGTH, for the given file.
+		 *
+		 * \param filename Char pointer to the offending file. If the string is
+		 * larger than 59 characters, it will be restricted to 59 characters.
+		 * If a nullptr is passed, the filename will be noted as invalid.
+		 *
+		 * \param line Char pointer to the offending line. If the string is
+		 * larger than 59 characters, it will be restricted to 59. If a nullptr
+		 * is passed, the line will be noted as invalid.
+		 *
+		 * \param linelength The length of the offending line.
+		 */
 		static PuzzleFileException invalidLineLength(
 				const char * filename,
 				const char * line,
 				int lineLength);
+
+		/**
+		 * \brief Creates a PuzzleFileException with its reason set to
+		 * INVALID_VALUE, for the given file.
+		 *
+		 * \param filename Char pointer to the offending file. If the string is
+		 * larger than 59 characters, it will be restricted to 59 characters.
+		 * If a nullptr is passed, the filename will be noted as invalid.
+		 *
+		 * \param line Char pointer to the offending line. If the string is
+		 * larger than 59 characters, it will be restricted to 59. If a nullptr
+		 * is passed, the line will be noted as invalid.
+		 *
+		 * \param invalidValue The offending value in the line.
+		 */
 		static PuzzleFileException invalidValue(
 				const char * filename,
 				const char * line,
 				char invalidValue);
 		/**@}*/
 
+		/**
+		 * \brief Trivial destructor for the class.
+		 */
 		virtual ~PuzzleFileException() throw () {} ;
+
+		/**
+		 * \brief Returns a string detailing the reasons why this exception was
+		 * thrown.
+		 *
+		 * Returns the reason why this exception was thrown.
+		 * If the reason was TOO_FEW_LINE, this is stated.
+		 * If the reason was INVALID_LINE_LENGTH, then the line and its length
+		 * is given.
+		 * If the reason was INVALID_VALUE, then the value and the line it was
+		 * in is returned.
+		 */
 		virtual const char * what();
+
+		/**
+		 * \brief Returns the reason for why this exception was returned.
+		 */
 		Reason getReason() const;
 
+		/**
+		 * \brief Copy constructor; the new PuzzleFileException is set to an
+		 * exact copy of other, with its own copy of other's string members.
+		 */
 		PuzzleFileException(const PuzzleFileException & other);
+
+		/**
+		 * \brief Overloaded assignment operator; this exception is set to be
+		 * a copy of other, with its own copy of other's string members.
+		 */
 		PuzzleFileException & operator=(const PuzzleFileException & other);
 
 	protected:
+		/**
+		 * \brief Protected constructor for the class.
+		 *
+		 * This constructor is not meant to be called from outside this class,
+		 * due to the slight complexity of its required arguments.
+		 */
 		PuzzleFileException(
 				Reason reason,
 				const char * filename,
