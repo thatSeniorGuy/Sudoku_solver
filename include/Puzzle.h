@@ -47,7 +47,6 @@ public:
 		virtual ~PuzzleFileException() throw () {} ;
 		virtual const char * what();
 
-		//TODO add copy constructor and assignment operator.
 		PuzzleFileException(const PuzzleFileException & other);
 		PuzzleFileException & operator=(const PuzzleFileException & other);
 
@@ -60,7 +59,7 @@ public:
 				char invalidValue = '?');
 
 	protected:
-		const int STR_LEN = 60;
+		const static int STR_LEN = 60;
 		char whatMessage_[256];
 		Reason reason_;
 		char filename_[STR_LEN];

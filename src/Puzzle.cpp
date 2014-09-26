@@ -140,6 +140,26 @@ Puzzle::PuzzleFileException::PuzzleFileException(
 		line_[i] = other.line_[i];
 }
 
+Puzzle::PuzzleFileException &
+Puzzle::PuzzleFileException::operator=(
+		const PuzzleFileException & other){
+	// whatMessage is constructed when what() is called.
+	for(auto & cha : whatMessage_)
+		cha = '\0';
+
+	reason_ = other.reason_;
+	length_ = other.length_;
+	invalidValue_ = other.invalidValue_;
+
+	for(int i = 0; i < STR_LEN; ++i)
+		filename_[i] = other.filename_[i];
+
+	for(int i = 0; i < STR_LEN; ++i)
+		line_[i] = other.line_[i];
+
+	return *this;
+}
+
 Puzzle::Puzzle() :
 	//squares_(puzzle_size*puzzle_size),
 	solved_(false),
