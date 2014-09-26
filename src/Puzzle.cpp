@@ -91,10 +91,34 @@ Puzzle::PuzzleFileException::invalidValue(
 }
 
 const char * Puzzle::PuzzleFileException::what(){
-	//TODO
+	strcat(whatMessage_, "The file '");
+	strcat(whatMessage_, filename_);
+	strcat(whatMessage_, "' ");
 
+	switch(reason_){
+	case TOO_FEW_LINES:
+		strcat(whatMessage_, " had too few lines for a valid Sudoku puzzle.");
+		break;
 
+	case INVALID_LINE_LENGTH:
+		strcat(whatMessage_, "had the line '");
+		strcat(whatMessage_, line_);
+		strcat(whatMessage_, "of length ");
+		char size[10];
+		snprintf(size, 9, "%d", length_);
+		strcat(whatMessage_, size);
+		strcat(whatMessage_, ".");
+		break;
 
+	case INVALID_VALUE:
+		strcat(whatMessage_, "had the line '");
+		strcat(whatMessage_, line_);
+		strcat(whatMessage_, "' which contained the invalid value of '");
+		char badValue[2];
+		snprintf(badValue, 1, "%c", invalidValue_);
+		strcat(whatMessage_, badValue);
+		strcat(whatMessage_, ".");
+	}
 
 	return whatMessage_;
 }
