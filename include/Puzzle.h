@@ -82,7 +82,7 @@ public:
 		 * larger than 59 characters, it will be restricted to 59. If a nullptr
 		 * is passed, the line will be noted as invalid.
 		 *
-		 * \param linelength The length of the offending line.
+		 * \param lineLength The length of the offending line.
 		 */
 		static PuzzleFileException invalidLineLength(
 				const char * filename,
@@ -144,13 +144,31 @@ public:
 		 */
 		PuzzleFileException & operator=(const PuzzleFileException & other);
 
-	//TODO change to private.
 	protected:
 		/**
 		 * \brief Protected constructor for the class.
 		 *
 		 * This constructor is not meant to be called from outside this class,
-		 * due to the slight complexity of its required arguments.
+		 * due to the slight complexity of its required arguments. Creates a
+		 * PuzzleFileException with the given Reason, filename of the
+		 * offending file, and other relevant information (depending on the
+		 * Reason of the exception).
+		 *
+		 * \param reason Reason for this exception being thrown. Used for
+		 * all three types of exception.
+		 *
+		 * \param filename Name of the file that is invalid for a Reason.
+		 * Used for all three types of exception.
+		 *
+		 * \param line The line in the offending file that caused this
+		 * exception to be thrown. Used for the Reasons INVALID_LINE_LENGTH
+		 * and INVALID_VALUE.
+		 *
+		 * \param length Length of an invalid line, used when the reason is
+		 * INVALID_LINE_LENGTHs.
+		 *
+		 * \param invalidValue The invalid value that causes a INVALID_VALUE exception
+		 * to be thrown.
 		 */
 		PuzzleFileException(
 				Reason reason,
@@ -160,12 +178,44 @@ public:
 				char invalidValue = '?');
 
 	protected:
+		/**
+		 *  \brief Length of the smaller strings used by this class.
+		 */
 		const static int STR_LEN = 60;
+
+		/**
+		 * \brief String that explains why this exception was thrown; created
+		 * when what() is called.
+		 */
 		char whatMessage_[256];
+
+		/**
+		 * \brief The reason why this exception was thrown.
+		 */
 		Reason reason_;
+
+		/**
+		 * \brief The name of the file that caused this exception to be thrown.
+		 */
 		char filename_[STR_LEN];
+
+		/**
+		 * \brief When the reason is INVALID_LINE_LENGTH or INVALID_VALUE, this
+		 * contains the offending line or the line that contained the offending
+		 * value.
+		 */
 		char line_[STR_LEN];
+
+		/**
+		 * \brief When the reason is INVALID_LINE_LENGTH, this contains the
+		 * length of the offending line.
+		 */
 		int length_;
+
+		/**
+		 * \brief When the reason is INVALID_VALUE, this contains the invalid
+		 * value.
+		 */
 		char invalidValue_;
 	};
 
