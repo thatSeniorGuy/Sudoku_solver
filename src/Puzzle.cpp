@@ -255,10 +255,13 @@ Puzzle::Puzzle(std::string filename) :
 }
 
 Puzzle::Puzzle(const Puzzle & other) :
-				squares_(other.squares_),
+				// squares_ initialised below.
 				solved_(other.solved_),
 				numLeftToSolve_(other.numLeftToSolve_)
-{}
+{
+	for(int i = 0; i < puzzle_size; ++i)
+		squares_[i] = other.squares_[i];
+}
 
 Puzzle & Puzzle::operator=(const Puzzle & other){
 	// Handle self-assignment.
