@@ -124,17 +124,17 @@ const char * Puzzle::PuzzleFileException::what(){
 
 Puzzle::PuzzleFileException::PuzzleFileException(
 		const PuzzleFileException & other) :
-			std::runtime_error(""),
-			reason_(other.reason_),
-			length_(other.length_),
-			invalidValue_(other.invalidValue_)
+					std::runtime_error(""),
+					reason_(other.reason_),
+					length_(other.length_),
+					invalidValue_(other.invalidValue_)
 {
 	// Zero out whatMessage (will be constructed when what() is called.
 	for(auto & cha : whatMessage_)
 		cha = '\0';
 
 	for(int i = 0; i < STR_LEN; ++i)
-			filename_[i] = other.filename_[i];
+		filename_[i] = other.filename_[i];
 
 	for(int i = 0; i < STR_LEN; ++i)
 		line_[i] = other.line_[i];
@@ -166,9 +166,9 @@ Puzzle::PuzzleFileException::getReason() const {
 }
 
 Puzzle::Puzzle() :
-	//squares_(puzzle_size*puzzle_size),
-	solved_(false),
-	numLeftToSolve_(puzzle_size*puzzle_size) {
+			//squares_ default constructed, positions set below.
+			solved_(false),
+			numLeftToSolve_(puzzle_size*puzzle_size) {
 
 	for(int i = 0; i < puzzle_size*puzzle_size; i++){
 		squares_[i].setRow(i/puzzle_size);
@@ -177,80 +177,87 @@ Puzzle::Puzzle() :
 }
 
 Puzzle::Puzzle(std::string filename) :
-		//squares_(puzzle_size*puzzle_size),
-		solved_(false),
-		numLeftToSolve_(puzzle_size*puzzle_size){
+				//squares_ default constructed, positions set below.
+				solved_(false),
+				numLeftToSolve_(puzzle_size*puzzle_size){
 
 	std::ifstream inFile(filename);
-	if(inFile.good()){
 
-		for(int i = 0; i < puzzle_size*puzzle_size; i++){
-			squares_[i].setRow(i/puzzle_size);
-			squares_[i].setCol(i%puzzle_size);
-		}
-
-
-		std::string line;
-		int currentRow=0;
-		bool success = true;
-
-		while(!inFile.eof()){
-			getline(inFile, line);
-			if(static_cast<int>(line.size())!=puzzle_size){
-				success = false;
-				break;
-			}
-			int currentCol = 0;
-
-			for(auto it = line.begin();	it!=line.end();	it++){
-				char character = *it;
-
-				if(character=='#'){
-					// We would create an unset square here, but square are by
-					// default unset, so we don't have to do anything.
-				}
-				else{
-					// check if number in valid range
-					int num = character - '0';
-					if(num < 1 || num > puzzle_size)
-						break;
-
-					squares_[currentRow*puzzle_size+currentCol].setValue(num);
-				}
-
-				currentCol++;
-			}
-
-			if(currentCol!=puzzle_size){
-				success = false;
-				break;
-			}
-
-			currentRow++;
-		}
-
-		if(currentRow!=puzzle_size)
-			success = false;
-
-		if(!success){
-			//TODO make custom exception and divide this code up.
-			std::ostringstream oss;
-			oss << "Error in processing file '" << filename << "'.";
-			throw std::runtime_error(oss.str());
-		}
-	}
-	else{
+	if(!inFile.good()){
 		std::ostringstream oss;
 		oss << "Could not open file '" << filename << "'.";
 		throw std::runtime_error(oss.str());
 	}
 
+
+	for(int i = 0; i < puzzle_size*puzzle_size; i++){
+		squares_[i].setRow(i/puzzle_size);
+		squares_[i].setCol(i%puzzle_size);
+	}
+
+	std::string line;
+	int currentRow=0;
+
+	//TODO this doesn't check if we have too many lines.
+	while(!inFile.eof()){
+		getline(inFile, line);
+
+		if(static_cast<int>(line.size())!=puzzle_size)
+			throw PuzzleFileException::invalidLineLength(
+					filename.c_str(),
+					line.c_str(),
+					line.size());
+
+		int currentCol = 0;
+
+		for(auto it = line.begin();	it!=line.end();	it++){
+			char character = *it;
+
+			if(character=='#'){
+				// We would create an unset square here, but square are by
+				// default unset, so we don't have to do anything.
+			}
+			else{
+				// check if we have number in the valid range
+				int num = character - '0';
+				if(num < 1 || num > puzzle_size)
+					throw PuzzleFileException::invalidValue(
+							filename.c_str(),
+							line.c_str(),
+							character);
+
+				bool ret = squares_[currentRow*puzzle_size+currentCol].setValue(num);
+				if(!ret)
+					throw std::runtime_error("Couldn't set the value?");
+			}
+
+			currentCol++;
+		}
+
+		//TODO I don't think this can happen???
+		// If currentCol is not equal to puzzle_size here, then the length
+		// of the line is not correct.
+		if(currentCol!=puzzle_size)
+			throw PuzzleFileException::invalidLineLength(\
+					filename.c_str(),
+					line.c_str(),
+					currentCol);
+
+		currentRow++;
+	}
+
+	//TODO could also have too many lines.
+	// If currentRow is not equal to puzzle_size here, then the file has
+	// too few lines to be a valid Sudoku puzzle.
+	if(currentRow!=puzzle_size)
+		throw PuzzleFileException::tooFewLines(filename.c_str());
+
 }
 
 Puzzle::Puzzle(const Puzzle & other) :
-		squares_(other.squares_),
-		solved_(other.solved_),
-		numLeftToSolve_(other.numLeftToSolve_)
+				squares_(other.squares_),
+				solved_(other.solved_),
+				numLeftToSolve_(other.numLeftToSolve_)
 {}
 
 Puzzle & Puzzle::operator=(const Puzzle & other){
