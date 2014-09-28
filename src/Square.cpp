@@ -24,7 +24,7 @@ Square::Square(int row, int col, int value) :
 		throw std::out_of_range(oss.str().c_str());
 	}
 
-	if(value < 1 || value > puzzle_size){
+	if(value < 1 || value > PUZZLE_SIZE){
 		std::ostringstream oss;
 		oss << "Invalid value supplied (" << value <<").";
 		throw std::out_of_range(oss.str().c_str());
@@ -46,7 +46,7 @@ Square::Square(int row, int col) :
 		throw std::out_of_range(oss.str().c_str());
 	}
 
-	for(int i = 1; i<=puzzle_size; i++){
+	for(int i = 1; i<=PUZZLE_SIZE; i++){
 		auto ret = possibleValues_.insert(i);
 		if(!ret.second)
 			throw std::runtime_error("Couldn't insert values into set?");
@@ -59,7 +59,7 @@ Square::Square(const Square & other) :
 {}
 
 bool Square::setValue(int newValue){
-	if(newValue < 1 || newValue > puzzle_size){
+	if(newValue < 1 || newValue > PUZZLE_SIZE){
 		std::ostringstream oss;
 		oss << "Invalid new value (" << newValue << ") supplied.";
 		throw std::out_of_range(oss.str().c_str());
@@ -98,7 +98,7 @@ void Square::setRow(int newRow){
 void Square::setCol(int newCol){
 	if(!validateCoordinate(newCol)) {
 		std::ostringstream oss;
-		oss << "Invalid row supplied (" << newCol <<").";
+		oss << "Invalid col supplied (" << newCol <<").";
 		throw std::out_of_range(oss.str().c_str());
 	}
 
@@ -141,7 +141,7 @@ bool Square::restrictValues(std::set<int> vals){
 	for(auto & x: vals){
 
 		// Check that potential restrict-ee is valid.
-		if(x < 1 || x > puzzle_size){
+		if(x < 1 || x > PUZZLE_SIZE){
 			std::ostringstream oss;
 			oss << "Value of '" << x << "' is invalid.";
 			throw std::out_of_range(oss.str().c_str());
@@ -182,7 +182,7 @@ Square & Square::operator=(const Square & other){
 
 bool Square::validateCoordinate(int coord){
 
-	return coord>= 0 && coord < puzzle_size;
+	return coord>= 0 && coord < PUZZLE_SIZE;
 }
 
 bool Square::validatePosition(const Position & pos){

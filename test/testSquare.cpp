@@ -142,10 +142,10 @@ static void testDefaultConstructor(){
 	cout << "Square was not set." << endl;
 
 	cout << "Possible values should have all integers from 1 to : "
-			<< Square::puzzle_size << endl;
+			<< Square::PUZZLE_SIZE << endl;
 
 	std::set<int> vals;
-	for(int i = 1; i <= Square::puzzle_size; ++i) {
+	for(int i = 1; i <= Square::PUZZLE_SIZE; ++i) {
 		auto ret = vals.insert(i);
 		if(!ret.second)
 			assert(false && "Error in making set?");
@@ -162,9 +162,9 @@ static void testSetterConstructor(){
 
 	std::set<int> posValues;
 	std::set<int> valValues;
-	for(int i = -1; i<=Square::puzzle_size; ++i)
+	for(int i = -1; i<=Square::PUZZLE_SIZE; ++i)
 		posValues.insert(i);
-	for(int i=0; i<=Square::puzzle_size; ++i)
+	for(int i=0; i<=Square::PUZZLE_SIZE; ++i)
 		valValues.insert(i);
 
 	for(auto col : posValues){
@@ -172,11 +172,11 @@ static void testSetterConstructor(){
 			for(auto val: valValues){
 				 // Invalid positions or values  should an std::out_of_range
 				if(col < 0 ||
-						col >= Square::puzzle_size ||
+						col >= Square::PUZZLE_SIZE ||
 						row < 0 ||
-						row >= Square::puzzle_size ||
+						row >= Square::PUZZLE_SIZE ||
 						val < 1 ||
-						val > Square::puzzle_size){
+						val > Square::PUZZLE_SIZE){
 					try{
 						Square s(row, col, val);
 						assert(false && "Expected exception?");
@@ -205,8 +205,8 @@ static void testSetterConstructor(){
 static void testCopyConstructor(){
 	cout << "\n***Testing copy constructor.***" << endl;
 
-	for(int row = 0; row < Square::puzzle_size; ++row){
-		for(int col = 0; col < Square::puzzle_size; ++col){
+	for(int row = 0; row < Square::PUZZLE_SIZE; ++row){
+		for(int col = 0; col < Square::PUZZLE_SIZE; ++col){
 			Square unset(row, col);
 			Square unsetCopy(unset);
 
@@ -216,7 +216,7 @@ static void testCopyConstructor(){
 			assert(unset.getPossibleValues() == unsetCopy.getPossibleValues()
 					&& "possibleValues not equal?");
 
-			for(int val = 1; val<=Square::puzzle_size; ++val){
+			for(int val = 1; val<=Square::PUZZLE_SIZE; ++val){
 				Square set(row, col, val);
 				Square setCopy(set);
 				assert(set.getRow() == setCopy.getRow() &&
@@ -241,7 +241,7 @@ static void testSetValue(){
 	cout << "\n***Testing setValue()***" << endl;
 
 	Square unset(0,0);
-	std::set<int> badValues = {-1,0,Square::puzzle_size+1, Square::puzzle_size+2};
+	std::set<int> badValues = {-1,0,Square::PUZZLE_SIZE+1, Square::PUZZLE_SIZE+2};
 	for(auto badValue : badValues){
 		try{
 			unset.setValue(badValue);
@@ -253,7 +253,7 @@ static void testSetValue(){
 	}
 
 	std::set<int> validValues;
-	for(int val = 1; val <= Square::puzzle_size; ++val)
+	for(int val = 1; val <= Square::PUZZLE_SIZE; ++val)
 		validValues.insert(val);
 
 	// If square is already set, false should be returned.
@@ -300,8 +300,8 @@ static void testSetValue(){
 static void testAssignment(){
 	cout << "\n***Testing assignment operator.***" << endl;
 
-	for(int row = 0; row < Square::puzzle_size; ++row){
-		for(int col = 0; col < Square::puzzle_size; ++col){
+	for(int row = 0; row < Square::PUZZLE_SIZE; ++row){
+		for(int col = 0; col < Square::PUZZLE_SIZE; ++col){
 			Square unset(row, col);
 			Square assignee;
 			assignee = unset;
@@ -312,7 +312,7 @@ static void testAssignment(){
 			assert(unset.getPossibleValues() == assignee.getPossibleValues()
 					&& "possibleValues not equal?");
 
-			for(int val = 1; val<=Square::puzzle_size; ++val){
+			for(int val = 1; val<=Square::PUZZLE_SIZE; ++val){
 				Square set(row, col, val);
 				Square setAssignee;
 				setAssignee = set;
@@ -336,9 +336,9 @@ static void testSetRow(){
 	cout << "\n***Testing setRow().***" << endl;
 	Square s(0,0);
 
-	for(int newRow = -1; newRow <= Square::puzzle_size; ++newRow){
+	for(int newRow = -1; newRow <= Square::PUZZLE_SIZE; ++newRow){
 		// These values of newRow should cause errors.
-		if(newRow < 0 || newRow > Square::puzzle_size-1){
+		if(newRow < 0 || newRow > Square::PUZZLE_SIZE-1){
 			try{
 				s.setRow(newRow);
 				assert(false && "Did not get expected exception?");
@@ -359,9 +359,9 @@ static void testSetCol(){
 	cout << "\n***Testing setCol().***" << endl;
 		Square s(0,0);
 
-		for(int newCol = -1; newCol <= Square::puzzle_size; ++newCol){
+		for(int newCol = -1; newCol <= Square::PUZZLE_SIZE; ++newCol){
 			// These values of newCol should cause errors.
-			if(newCol < 0 || newCol > Square::puzzle_size-1){
+			if(newCol < 0 || newCol > Square::PUZZLE_SIZE-1){
 				try{
 					s.setCol(newCol);
 					assert(false && "Did not get expected exception?");
@@ -382,9 +382,9 @@ static void testRestrictValues(){
 	cout << "\n***Testing restrictValues().***" << endl;
 
 	// Invalid passed values should throw a std::out_of_range
-	for(int value = -1; value < Square::puzzle_size+2; ++value){
+	for(int value = -1; value < Square::PUZZLE_SIZE+2; ++value){
 		Square unset(0,0);
-		if(value < 1 || value > Square::puzzle_size){
+		if(value < 1 || value > Square::PUZZLE_SIZE){
 			try{
 				unset.restrictValues({value});
 				assert(false && "Did not get expected exception?");
@@ -401,7 +401,7 @@ static void testRestrictValues(){
 
 	// If Square has only one value, square should be set.
 	std::set<int> values;
-	for(int i = 1; i<=Square::puzzle_size; ++i)
+	for(int i = 1; i<=Square::PUZZLE_SIZE; ++i)
 		values.insert(i);
 
 	for(auto valToSkip: values){
@@ -432,7 +432,7 @@ static void testToString(){
 			"An unset square doesn't have # as its representation?");
 
 	// For a set Square, string is number.
-	for(int val = 1; val <= Square::puzzle_size; ++val){
+	for(int val = 1; val <= Square::PUZZLE_SIZE; ++val){
 		Square set(0,0,val);
 		std::string setStr = set.toString();
 		std::ostringstream oss;

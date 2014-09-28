@@ -21,17 +21,17 @@
  *
  * This class represents the smallest part of a Sudoku puzzle, the square (of
  * which there are 81 in a standard puzzle). A square can either be set and have
- * a value between 1 and \ref puzzle_size, or it can be unset and have many
+ * a value between 1 and \ref PUZZLE_SIZE, or it can be unset and have many
  * possible values. Squares also have a row and a column, which must both be
- * between 0 and \ref puzzle_size. For now, \ref puzzle_size is set to 9.
+ * between 0 and \ref PUZZLE_SIZE. For now, \ref PUZZLE_SIZE is set to 9.
  */
 class Square {
 public:
 	/**
-	 * \var puzzle_size
+	 * \var PUZZLE_SIZE
 	 * \brief The size of the Sudoku puzzle.
 	 */
-	static const int puzzle_size = 9;
+	static const int PUZZLE_SIZE = 9;
 
 public:
 	/** @name Constructors */
@@ -42,14 +42,14 @@ public:
 	 *
 	 * This creates an unset \ref Square; the \ref Square's row and column are
 	 * set to the supplied values, isSet_ is set to false, and possibleValues_
-	 * will contain all the integers from 1 to \ref puzzle_size.
+	 * will contain all the integers from 1 to \ref PUZZLE_SIZE.
 	 *
 	 * \param row The neq Square's row. If this is not between 0 and \ref
-	 * puzzle_size - 1, then a std::out_of_range exception will be thrown.
+	 * PUZZLE_SIZE - 1, then a std::out_of_range exception will be thrown.
 	 * Defaults to 0.
 	 *
 	 * \param col The Square's new col. If this is not between 0 and \ref
-	 * puzzle_size - 1, then a std::out_of_range exception will be thrown.
+	 * PUZZLE_SIZE - 1, then a std::out_of_range exception will be thrown.
 	 * Defaults to 0.
 	 */
 
@@ -64,13 +64,13 @@ public:
 	 * accordingly.
 	 *
 	 * \param row The new Square's row. If this is not between 0 and \ref
-	 * puzzle_size - 1, then a std::out_of_range exception will be thrown.
+	 * PUZZLE_SIZE - 1, then a std::out_of_range exception will be thrown.
 	 *
 	 * \param col The new Square's col. If this is not between 0 and \ref
-	 * puzzle_size - 1, then a std::out_of_range exception will be thrown.
+	 * PUZZLE_SIZE - 1, then a std::out_of_range exception will be thrown.
 	 *
 	 * \param value The new \ref Square's value. If this is not between 1 and
-	 * \ref puzzle_size, then a std::out_of_range exception will be thrown.
+	 * \ref PUZZLE_SIZE, then a std::out_of_range exception will be thrown.
 	 */
 	Square(int row, int col, int value);
 
@@ -96,7 +96,7 @@ public:
 	 * cleared to only contain the new value.
 	 *
 	 * \param newValue The value for the Square. If this is not between 1 and
-	 * \ref puzzle_size, a std::out_of_range exception will be thrown.
+	 * \ref PUZZLE_SIZE, a std::out_of_range exception will be thrown.
 	 *
 	 * \returns Returns true if the Square was set successfully, or false if
 	 * the Square was already set, or the given value was not in the Square's
@@ -108,7 +108,7 @@ public:
 	 * \brief Changes the Square's row.
 	 *
 	 * Tries to change the Square's row to the new specified value. If the new
-	 * co-ordinate is not between 0 and puzzle_size - 1, a std::out_of_range
+	 * co-ordinate is not between 0 and PUZZLE_SIZE - 1, a std::out_of_range
 	 * exception will be thrown.
 	 */
 	void setRow(int newRow);
@@ -117,7 +117,7 @@ public:
 	 * \brief Changes the Square's col.
 	 *
 	 * Tries to change the Square's col to the new specified value. If the new
-	 * co-ordinate is not between 0 and puzzle_size - 1, a std::out_of_range
+	 * co-ordinate is not between 0 and PUZZLE_SIZE - 1, a std::out_of_range
 	 * exception will be thrown.
 	 */
 	void setCol(int newCol);
@@ -159,7 +159,7 @@ public:
 	 *
 	 * \param vals The list of values to take away from this Square's list of
 	 * possible values. If any of them are less than one or greater than
-	 * puzzle_size, a std::out_of_range exception will be thrown.
+	 * PUZZLE_SIZE, a std::out_of_range exception will be thrown.
 	 *
 	 * \returns This method will return false is this Square is already set
 	 * then it is called, or if all values are processed then this Square has
@@ -179,7 +179,7 @@ public:
 	 * \brief Validates the given co-ordinate (either a row or a col).
 	 *
 	 * Utility function to validate whether a given row or col is valid; that
-	 * is, between 0 and \ref puzzle_size - 1. If it is not, false is returned;
+	 * is, between 0 and \ref PUZZLE_SIZE - 1. If it is not, false is returned;
 	 * otherwise true is returned.
 	 */
 	static bool validateCoordinate(int coord);
@@ -189,7 +189,7 @@ public:
 	 *
 	 * Utility function to validate whether a \ref Position is valid; that
 	 * is, whether its row and col attributes are between 0 and \ref
-	 * puzzle_size - 1. If they are not, then false is returned; otherwise true
+	 * PUZZLE_SIZE - 1. If they are not, then false is returned; otherwise true
 	 * is returned.
 	 */
 	static bool validatePosition(const Position & pos);
