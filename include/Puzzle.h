@@ -22,13 +22,16 @@
  */
 class Puzzle {
 public:
-	/** \var puzzle_size
+	/** \var PUZZLE_SIZE
 	 *  \brief The size of the Sudoku puzzle.
-	 *
 	 */
-	static const int puzzle_size = 9;
+	static const int PUZZLE_SIZE = 9;
 
-	static const int NUM_SQUARES = puzzle_size * puzzle_size;
+	/**
+	 * \var NUM_SQUARES
+	 * \brief The number of Squares in the Sudoku puzzle.
+	 */
+	static const int NUM_SQUARES = PUZZLE_SIZE * PUZZLE_SIZE;
 
 	/**
 	 * \class PuzzleFileException
@@ -229,7 +232,7 @@ public:
 	 * \brief Default constructor for the class.
 	 *
 	 * This creates an empty Puzzle, with all of its Squares unset, solved_ set
-	 * to false and numLeftToSolve_ set to \ref puzzle_size * \ref puzzle_size.
+	 * to false and numLeftToSolve_ set to \ref PUZZLE_SIZE * \ref PUZZLE_SIZE.
 	 */
 	Puzzle();
 

@@ -171,8 +171,8 @@ Puzzle::Puzzle() :
 			numLeftToSolve_(NUM_SQUARES) {
 
 	for(int i = 0; i < NUM_SQUARES; i++){
-		squares_[i].setRow(i/puzzle_size);
-		squares_[i].setCol(i%puzzle_size);
+		squares_[i].setRow(i/PUZZLE_SIZE);
+		squares_[i].setCol(i%PUZZLE_SIZE);
 	}
 }
 
@@ -191,9 +191,9 @@ Puzzle::Puzzle(std::string filename) :
 	}
 
 
-	for(int i = 0; i < puzzle_size*puzzle_size; i++){
-		squares_[i].setRow(i/puzzle_size);
-		squares_[i].setCol(i%puzzle_size);
+	for(int i = 0; i < PUZZLE_SIZE*PUZZLE_SIZE; i++){
+		squares_[i].setRow(i/PUZZLE_SIZE);
+		squares_[i].setCol(i%PUZZLE_SIZE);
 	}
 
 	std::string line;
@@ -203,7 +203,7 @@ Puzzle::Puzzle(std::string filename) :
 	while(!inFile.eof()){
 		getline(inFile, line);
 
-		if(static_cast<int>(line.size())!=puzzle_size)
+		if(static_cast<int>(line.size())!=PUZZLE_SIZE)
 			throw PuzzleFileException::invalidLineLength(
 					filename.c_str(),
 					line.c_str(),
@@ -221,13 +221,13 @@ Puzzle::Puzzle(std::string filename) :
 			else{
 				// check if we have number in the valid range
 				int num = character - '0';
-				if(num < 1 || num > puzzle_size)
+				if(num < 1 || num > PUZZLE_SIZE)
 					throw PuzzleFileException::invalidValue(
 							filename.c_str(),
 							line.c_str(),
 							character);
 
-				bool ret = squares_[currentRow*puzzle_size+currentCol].setValue(num);
+				bool ret = squares_[currentRow*PUZZLE_SIZE+currentCol].setValue(num);
 				if(!ret)
 					throw std::runtime_error("Couldn't set the value?");
 			}
@@ -238,7 +238,7 @@ Puzzle::Puzzle(std::string filename) :
 		//TODO I don't think this can happen???
 		// If currentCol is not equal to puzzle_size here, then the length
 		// of the line is not correct.
-		if(currentCol!=puzzle_size)
+		if(currentCol!=PUZZLE_SIZE)
 			throw PuzzleFileException::invalidLineLength(\
 					filename.c_str(),
 					line.c_str(),
@@ -250,7 +250,7 @@ Puzzle::Puzzle(std::string filename) :
 	//TODO could also have too many lines.
 	// If currentRow is not equal to puzzle_size here, then the file has
 	// too few lines to be a valid Sudoku puzzle.
-	if(currentRow!=puzzle_size)
+	if(currentRow!=PUZZLE_SIZE)
 		throw PuzzleFileException::tooFewLines(filename.c_str());
 
 }
