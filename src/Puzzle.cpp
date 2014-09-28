@@ -191,7 +191,7 @@ Puzzle::Puzzle(std::string filename) :
 	}
 
 
-	for(int i = 0; i < PUZZLE_SIZE*PUZZLE_SIZE; i++){
+	for(int i = 0; i < NUM_SQUARES; i++){
 		squares_[i].setRow(i/PUZZLE_SIZE);
 		squares_[i].setCol(i%PUZZLE_SIZE);
 	}
