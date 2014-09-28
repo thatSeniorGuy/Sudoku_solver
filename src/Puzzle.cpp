@@ -168,9 +168,9 @@ Puzzle::PuzzleFileException::getReason() const {
 Puzzle::Puzzle() :
 			//squares_ default constructed, positions set below.
 			solved_(false),
-			numLeftToSolve_(puzzle_size*puzzle_size) {
+			numLeftToSolve_(NUM_SQUARES) {
 
-	for(int i = 0; i < puzzle_size*puzzle_size; i++){
+	for(int i = 0; i < NUM_SQUARES; i++){
 		squares_[i].setRow(i/puzzle_size);
 		squares_[i].setCol(i%puzzle_size);
 	}
@@ -179,7 +179,8 @@ Puzzle::Puzzle() :
 Puzzle::Puzzle(std::string filename) :
 				//squares_ default constructed, positions set below.
 				solved_(false),
-				numLeftToSolve_(puzzle_size*puzzle_size){
+				numLeftToSolve_(NUM_SQUARES)
+{
 
 	std::ifstream inFile(filename);
 
@@ -259,7 +260,7 @@ Puzzle::Puzzle(const Puzzle & other) :
 				solved_(other.solved_),
 				numLeftToSolve_(other.numLeftToSolve_)
 {
-	for(int i = 0; i < puzzle_size; ++i)
+	for(int i = 0; i < NUM_SQUARES; ++i)
 		squares_[i] = other.squares_[i];
 }
 
@@ -270,7 +271,7 @@ Puzzle & Puzzle::operator=(const Puzzle & other){
 
 	solved_ = other.solved_;
 	numLeftToSolve_ = other.numLeftToSolve_;
-	for(int i = 0; i < puzzle_size*puzzle_size; ++i)
+	for(int i = 0; i < NUM_SQUARES; ++i)
 		squares_[i] = other.squares_[i];
 
 	return *this;

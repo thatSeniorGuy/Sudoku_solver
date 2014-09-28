@@ -28,6 +28,8 @@ public:
 	 */
 	static const int puzzle_size = 9;
 
+	static const int NUM_SQUARES = puzzle_size * puzzle_size;
+
 	/**
 	 * \class PuzzleFileException
 	 *
@@ -252,7 +254,7 @@ public:
 	Puzzle & operator=(const Puzzle & other);
 
 private:
-	Square squares_[puzzle_size * puzzle_size];
+	Square squares_[NUM_SQUARES];
 	bool solved_;
 	int numLeftToSolve_;
 };
