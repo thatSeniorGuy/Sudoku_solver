@@ -44,8 +44,6 @@ public:
 	 * invalid. The class uses named constructors for users to create
 	 * PuzzleFileExceptions.
 	 */
-	//TODO use named parameter idiom?
-	//http://www.parashift.com/c++-faq/named-parameter-idiom.html
 	class PuzzleFileException : public std::runtime_error {
 		/**
 		 * \enum Reason
@@ -238,6 +236,7 @@ public:
 	 */
 	Puzzle();
 
+	//TODO comment.
 	Puzzle(std::string filename);
 
 	/**

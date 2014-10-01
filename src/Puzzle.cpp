@@ -199,8 +199,7 @@ Puzzle::Puzzle(std::string filename) :
 	std::string line;
 	int currentRow=0;
 
-	//TODO this doesn't check if we have too many lines.
-	while(!inFile.eof()){
+	while(!inFile.eof() && currentRow < PUZZLE_SIZE){
 		getline(inFile, line);
 
 		if(static_cast<int>(line.size())!=PUZZLE_SIZE)
@@ -235,19 +234,9 @@ Puzzle::Puzzle(std::string filename) :
 			currentCol++;
 		}
 
-		//TODO I don't think this can happen???
-		// If currentCol is not equal to puzzle_size here, then the length
-		// of the line is not correct.
-		if(currentCol!=PUZZLE_SIZE)
-			throw PuzzleFileException::invalidLineLength(\
-					filename.c_str(),
-					line.c_str(),
-					currentCol);
-
 		currentRow++;
-	}
+	} //end while not EOF and currentRow < PUZZLE_SIZE.
 
-	//TODO could also have too many lines.
 	// If currentRow is not equal to puzzle_size here, then the file has
 	// too few lines to be a valid Sudoku puzzle.
 	if(currentRow!=PUZZLE_SIZE)
