@@ -14,12 +14,7 @@ Square::Square(int row, int col, int value) :
 {
 	checkThrowCoordinate(row, ROW);
 	checkThrowCoordinate(col, COL);
-
-	if(value < 1 || value > PUZZLE_SIZE){
-		std::ostringstream oss;
-		oss << "Invalid value supplied (" << value <<").";
-		throw std::out_of_range(oss.str().c_str());
-	}
+	checkThrowValue(value);
 }
 
 Square::Square(int row, int col) :
@@ -41,11 +36,7 @@ Square::Square(const Square & other) :
 {}
 
 bool Square::setValue(int newValue){
-	if(newValue < 1 || newValue > PUZZLE_SIZE){
-		std::ostringstream oss;
-		oss << "Invalid new value (" << newValue << ") supplied.";
-		throw std::out_of_range(oss.str().c_str());
-	}
+	checkThrowValue(newValue);
 
 	// Can't set a square if it's already set.
 	if(isSet_)
@@ -112,11 +103,7 @@ bool Square::restrictValues(std::set<int> vals){
 	for(auto & x: vals){
 
 		// Check that potential restrict-ee is valid.
-		if(x < 1 || x > PUZZLE_SIZE){
-			std::ostringstream oss;
-			oss << "Value of '" << x << "' is invalid.";
-			throw std::out_of_range(oss.str().c_str());
-		}
+		checkThrowValue(x);
 
 		/* std::set::erase() returns the number of elements erased. If 0 was
 		 * returned, then the value was already not possible for this square,
@@ -161,6 +148,14 @@ void Square::checkThrowCoordinate(int coord, rowcol rc){
 			o << "col";
 
 		o << " '" << coord << "' supplied.";
+		throw std::out_of_range(o.str());
+	}
+}
+
+void Square::checkThrowValue(int value){
+	if(value < 1 || value > PUZZLE_SIZE){
+		std::ostringstream o;
+		o << "Invalid value '" << value << "' supplied.";
 		throw std::out_of_range(o.str());
 	}
 }

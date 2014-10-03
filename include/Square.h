@@ -201,6 +201,17 @@ public:
 	static void checkThrowCoordinate(int coord, rowcol rc);
 
 	/**
+	 * \brief Checks whether the given value is valid, and if not, throws a
+	 * std::out_of_range exception.
+	 *
+	 * Utility function to determine whether the given value is valid; that is,
+	 * whether it is between 1 and PUZZLE_SIZE. If it is not, then a
+	 * std::out_of_range exception will be thrown with a appropriate what()
+	 * message.
+	 */
+	static void checkThrowValue(int value);
+
+	/**
 	 * \brief Returns a string representation of the Square.
 	 *
 	 * If the Square is set, then the returned std::string will contain its
