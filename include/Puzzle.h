@@ -17,7 +17,7 @@
 #include <stdexcept>
 
 /** \class Puzzle
- * //TODO
+ * //TODO last comment this.
  *
  */
 class Puzzle {
@@ -132,10 +132,50 @@ public:
 		 */
 		virtual const char * what();
 
+		/** @name Getters. */
+		/**@{*/
+
 		/**
 		 * \brief Returns the reason for why this exception was returned.
 		 */
 		Reason getReason() const;
+
+		/**
+		 * \brief Returns the name of the file that caused this exception to be
+		 * thrown.
+		 */
+		const char * getFilename() const;
+
+		/**
+		 * \brief Returns the offending line of the file that caused this
+		 * exception to be thrown, if this exception was thrown because of
+		 * INVALID_LINE_LENGTH or INVALID_VALUE.
+		 *
+		 * Note that if the reason for this exception was _not_
+		 * INVALID_LINE_LENGTH or INVALID_VALUE, this string will be empty.
+		 */
+		const char * getLine() const;
+
+		/**
+		 * \brief Returns the length of the line of the file that caused this
+		 * exception to be thrown, if this exception was thrown because of
+		 * INVALID_LINE_LENGTH.
+		 *
+		 * Note that if the Reason for this exception was not
+		 * INVALID_LINE_LENGTH, this will be zero.
+		 */
+		int getLength() const;
+
+		/**
+		 * \brief Returns the character that caused this exception to be
+		 * thrown, if this exception was thrown because of INVALID_VALUE.
+		 *
+		 * Note that if the Reason of this exception was not INVALID_VALUE,
+		 * then what is returned will be garbage.
+		 */
+		char getInvalidValue() const;
+
+		/**@}*/
 
 		/**
 		 * \brief Copy constructor; the new PuzzleFileException is set to an
@@ -236,7 +276,8 @@ public:
 	 */
 	Puzzle();
 
-	//TODO comment.
+	//TODO 2 test this and default constructor out.
+	//TODO 3 comment.
 	Puzzle(std::string filename);
 
 	/**

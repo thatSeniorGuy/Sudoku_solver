@@ -173,6 +173,22 @@ Puzzle::PuzzleFileException::getReason() const {
 	return reason_;
 }
 
+const char * Puzzle::PuzzleFileException::getFilename() const{
+	return filename_;
+}
+
+const char * Puzzle::PuzzleFileException::getLine() const{
+	return line_;
+}
+
+int Puzzle::PuzzleFileException::getLength() const{
+	return length_;
+}
+
+char Puzzle::PuzzleFileException::getInvalidValue() const{
+	return invalidValue_;
+}
+
 Puzzle::Puzzle() :
 			//squares_ default constructed, positions set below.
 			solved_(false),
