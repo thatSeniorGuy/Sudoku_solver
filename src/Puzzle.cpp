@@ -278,6 +278,14 @@ Puzzle::Puzzle(const Puzzle & other) :
 		squares_[i] = other.squares_[i];
 }
 
+bool Puzzle::isSolved() const {
+	return solved_;
+}
+
+int Puzzle::getNumLeftToSolve() const {
+	return numLeftToSolve_;
+}
+
 Puzzle & Puzzle::operator=(const Puzzle & other){
 	// Handle self-assignment.
 	if(this==&other)

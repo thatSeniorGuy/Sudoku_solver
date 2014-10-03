@@ -290,6 +290,23 @@ public:
 
 	/**@}*/
 
+	/** @name Getters.*/
+	/**@{*/
+
+	/**
+	 * \brief Returns whether this Puzzle has been solved or not.
+	 */
+	bool isSolved() const;
+
+	/**
+	 * \brief Returns the number of Squares that are left to solved for this
+	 * Puzzle.
+	 */
+	int getNumLeftToSolve() const;
+
+
+	/**@}*/
+
 	/**
 	 * \brief Overload of assignment operator.
 	 *
