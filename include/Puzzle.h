@@ -308,6 +308,15 @@ public:
 	/**@}*/
 
 	/**
+	 * \brief Returns a const reference to the specified Square of the Puzzle.
+	 *
+	 * Gives a reference to a Square at the specified row and column. Both of
+	 * these positions should be within 0 and PUZZLE_SIZE-1. If either of them
+	 * are not, a std::out_of_range exception will be thrown.
+	 */
+	const Square & operator()(int row, int col) const;
+
+	/**
 	 * \brief Overload of assignment operator.
 	 *
 	 * This \ref Puzzle is set to be an exact copy for the 'other' Puzzle, with
