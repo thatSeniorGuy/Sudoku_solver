@@ -278,7 +278,7 @@ public:
 
 	//TODO 2 test this and default constructor out.
 	//TODO 3 comment.
-	Puzzle(std::string filename);
+	Puzzle(const std::string & filename);
 
 	/**
 	 * \brief Copy constructor.

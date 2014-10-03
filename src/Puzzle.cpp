@@ -200,7 +200,8 @@ Puzzle::Puzzle() :
 	}
 }
 
-Puzzle::Puzzle(std::string filename) :
+//TODO not changing solved or numLeftToSolve for solved puzzles.
+Puzzle::Puzzle(const std::string & filename) :
 				//squares_ default constructed, positions set below.
 				solved_(false),
 				numLeftToSolve_(NUM_SQUARES)
