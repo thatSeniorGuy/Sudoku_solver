@@ -90,6 +90,14 @@ Puzzle::PuzzleFileException::invalidValue(
 }
 
 const char * Puzzle::PuzzleFileException::what(){
+
+	// whatMessage is initialised to all \0's in the constructor, and
+	// constructed here. If its string length is non-zero, then then what() has
+	// already been called and there's no point in constructing the string
+	// again.
+	if(strlen(whatMessage_) != 0)
+		return whatMessage_;
+
 	strcat(whatMessage_, "The file '");
 	strcat(whatMessage_, filename_);
 	strcat(whatMessage_, "' ");
