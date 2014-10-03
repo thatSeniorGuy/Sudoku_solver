@@ -33,6 +33,15 @@ public:
 	 */
 	static const int PUZZLE_SIZE = 9;
 
+	/**
+	 * \brief Convenience enum, to detail whether we're dealing with a row or
+	 * column co-ordinate.
+	 */
+	enum rowcol{
+		ROW,
+		COL,
+	};
+
 public:
 	/** @name Constructors */
 	/**@{*/
@@ -176,23 +185,20 @@ public:
 	Square & operator=(const Square & other);
 
 	/**
-	 * \brief Validates the given co-ordinate (either a row or a col).
+	 * \brief Checks the given co-ordinate (either a row or a col), and throws
+	 * an exception if it is invalid.
 	 *
 	 * Utility function to validate whether a given row or col is valid; that
-	 * is, between 0 and \ref PUZZLE_SIZE - 1. If it is not, false is returned;
-	 * otherwise true is returned.
-	 */
-	static bool validateCoordinate(int coord);
-
-	/**
-	 * \brief Validates the given \ref Position.
+	 * is, between 0 and \ref PUZZLE_SIZE - 1. If it is not, then a
+	 * std::out_of_range exception is thrown.
 	 *
-	 * Utility function to validate whether a \ref Position is valid; that
-	 * is, whether its row and col attributes are between 0 and \ref
-	 * PUZZLE_SIZE - 1. If they are not, then false is returned; otherwise true
-	 * is returned.
+	 * \param coord Row or column to be checked.
+	 *
+	 * \param rc rowcol enum that specifies whether the co-ordinate to check is
+	 * a row or a column; the only effect this has is on the what() message for
+	 * the exception.
 	 */
-	static bool validatePosition(const Position & pos);
+	static void checkThrowCoordinate(int coord, rowcol rc);
 
 	/**
 	 * \brief Returns a string representation of the Square.

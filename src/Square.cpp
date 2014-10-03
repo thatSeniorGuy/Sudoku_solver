@@ -12,17 +12,8 @@
 Square::Square(int row, int col, int value) :
 	row_(row), col_(col), isSet_(true), value_(value), possibleValues_({value})
 {
-	if(!validateCoordinate(row)) {
-		std::ostringstream oss;
-		oss << "Invalid row supplied (" << row <<").";
-		throw std::out_of_range(oss.str().c_str());
-	}
-
-	if(!validateCoordinate(col)){
-		std::ostringstream oss;
-		oss << "Invalid col supplied (" << col <<").";
-		throw std::out_of_range(oss.str().c_str());
-	}
+	checkThrowCoordinate(row, ROW);
+	checkThrowCoordinate(col, COL);
 
 	if(value < 1 || value > PUZZLE_SIZE){
 		std::ostringstream oss;
@@ -34,17 +25,8 @@ Square::Square(int row, int col, int value) :
 Square::Square(int row, int col) :
 		row_(row), col_(col), isSet_(false), value_(-1), possibleValues_()
 {
-	if(!validateCoordinate(row)) {
-		std::ostringstream oss;
-		oss << "Invalid row supplied (" << row <<").";
-		throw std::out_of_range(oss.str().c_str());
-	}
-
-	if(!validateCoordinate(col)){
-		std::ostringstream oss;
-		oss << "Invalid col supplied (" << col <<").";
-		throw std::out_of_range(oss.str().c_str());
-	}
+	checkThrowCoordinate(row, ROW);
+	checkThrowCoordinate(col, COL);
 
 	for(int i = 1; i<=PUZZLE_SIZE; i++){
 		auto ret = possibleValues_.insert(i);
@@ -85,23 +67,12 @@ bool Square::setValue(int newValue){
 }
 
 void Square::setRow(int newRow){
-
-	if(!validateCoordinate(newRow)) {
-		std::ostringstream oss;
-		oss << "Invalid row supplied (" << newRow <<").";
-		throw std::out_of_range(oss.str().c_str());
-	}
-
+	checkThrowCoordinate(newRow, ROW);
 	row_ = newRow;
 }
 
 void Square::setCol(int newCol){
-	if(!validateCoordinate(newCol)) {
-		std::ostringstream oss;
-		oss << "Invalid col supplied (" << newCol <<").";
-		throw std::out_of_range(oss.str().c_str());
-	}
-
+	checkThrowCoordinate(newCol, COL);
 	col_ = newCol;
 }
 
@@ -180,14 +151,18 @@ Square & Square::operator=(const Square & other){
 	return *this;
 }
 
-bool Square::validateCoordinate(int coord){
+void Square::checkThrowCoordinate(int coord, rowcol rc){
+	if(coord < 0 || coord >= PUZZLE_SIZE){
+		std::ostringstream o;
+		o << "Invalid ";
+		if(rc == ROW)
+			o << "row";
+		else
+			o << "col";
 
-	return coord>= 0 && coord < PUZZLE_SIZE;
-}
-
-bool Square::validatePosition(const Position & pos){
-
-	return validateCoordinate(pos.row) && validateCoordinate(pos.col);
+		o << " '" << coord << "' supplied.";
+		throw std::out_of_range(o.str());
+	}
 }
 
 std::string Square::toString() const {

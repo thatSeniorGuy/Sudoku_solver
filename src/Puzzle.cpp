@@ -288,16 +288,8 @@ int Puzzle::getNumLeftToSolve() const {
 
 const Square & Puzzle::operator()(int row, int col) const {
 
-	if(!Square::validateCoordinate(row)) {
-		std::ostringstream o;
-		o << "Invalid row of '" << row << "' passed.";
-		throw std::out_of_range(o.str());
-	}
-
-	if(!Square::validateCoordinate(col)){
-		std::ostringstream o;
-		o << "Invalid col of '" << col << "' passed.";
-	}
+	Square::checkThrowCoordinate(row, Square::ROW);
+	Square::checkThrowCoordinate(col, Square::COL);
 
 	return squares_[row*PUZZLE_SIZE + col];
 }
