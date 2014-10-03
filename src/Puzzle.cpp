@@ -200,7 +200,6 @@ Puzzle::Puzzle() :
 	}
 }
 
-//TODO not changing solved or numLeftToSolve for solved puzzles.
 Puzzle::Puzzle(const std::string & filename) :
 				//squares_ default constructed, positions set below.
 				solved_(false),
@@ -214,7 +213,6 @@ Puzzle::Puzzle(const std::string & filename) :
 		oss << "Could not open file '" << filename << "'.";
 		throw std::runtime_error(oss.str());
 	}
-
 
 	for(int i = 0; i < NUM_SQUARES; i++){
 		squares_[i].setRow(i/PUZZLE_SIZE);
@@ -254,6 +252,7 @@ Puzzle::Puzzle(const std::string & filename) :
 				bool ret = squares_[currentRow*PUZZLE_SIZE+currentCol].setValue(num);
 				if(!ret)
 					throw std::runtime_error("Couldn't set the value?");
+				numLeftToSolve_--;
 			}
 
 			currentCol++;
@@ -267,6 +266,15 @@ Puzzle::Puzzle(const std::string & filename) :
 	if(currentRow!=PUZZLE_SIZE)
 		throw PuzzleFileException::tooFewLines(filename.c_str());
 
+	if(numLeftToSolve_==0)
+		solved_ = true;
+
+	if(numLeftToSolve_<0){
+		std::ostringstream o;
+		o << "Somehow, numLeftToSolve_ is negative (specifically, '"
+				<< numLeftToSolve_ << "').";
+		throw std::runtime_error(o.str());
+	}
 }
 
 Puzzle::Puzzle(const Puzzle & other) :

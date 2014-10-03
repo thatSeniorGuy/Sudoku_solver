@@ -272,7 +272,7 @@ public:
 	 * \brief Default constructor for the class.
 	 *
 	 * This creates an empty Puzzle, with all of its Squares unset, solved_ set
-	 * to false and numLeftToSolve_ set to \ref PUZZLE_SIZE * \ref PUZZLE_SIZE.
+	 * to false and numLeftToSolve_ set to \ref NUM_SQUARES.
 	 */
 	Puzzle();
 
